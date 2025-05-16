@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ExternalLink, Zap, CircleCheckBig, ChartNoAxesColumnIncreasing } from "lucide-react";
+import { ExternalLink, Zap, CircleCheckBig, ChartNoAxesColumnIncreasing, Brain } from "lucide-react";
 import Link from 'next/link';
 import Image from 'next/image';
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -13,12 +13,11 @@ export default function LandingPage() {
         <div className="container flex h-16 sm:h-20 items-center">
           <Link href="/" className="flex h-full items-center">
             <Image
-              src="https://placehold.co/150x50.png"
+              src="https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx2ZWN0b3J8ZW58MHx8fHwxNzQ3NDIzNDcyfDA&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Tri-AI Logo"
               width={150}
               height={50}
               className="h-auto w-auto object-contain animate-playful-tilt"
-              data-ai-hint="cosmic logo"
               priority
             />
           </Link>

@@ -15,9 +15,11 @@ export function ThemeToggle() {
       const storedTheme = localStorage.getItem("theme");
       if (storedTheme === "light") {
         setThemeState("light");
+        document.documentElement.classList.remove("dark");
       } else {
-        // Default to dark if no theme or 'dark' is stored
-        setThemeState("dark"); 
+        // Default to dark if 'dark' or no theme is stored
+        setThemeState("dark");
+        document.documentElement.classList.add("dark");
       }
     }
   }, []);

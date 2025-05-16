@@ -87,7 +87,10 @@ const validateArticleDataFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await validateArticleDataPrompt(input);
-    return output!;
+    if (!output) {
+      throw new Error("AI failed to validate article data in the expected format.");
+    }
+    return output;
   }
 );
 

@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -80,6 +81,10 @@ const articleScraperFlow = ai.defineFlow(
   },
   async (flowInput: ArticleScraperFlowInput) => {
     const {output} = await articleScraperPrompt(flowInput);
-    return output!; 
+    if (!output) {
+      throw new Error("AI failed to extract article data in the expected format from the HTML content.");
+    }
+    return output; 
   }
 );
+

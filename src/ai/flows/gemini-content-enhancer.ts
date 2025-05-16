@@ -1,3 +1,4 @@
+
 // src/ai/flows/gemini-content-enhancer.ts
 'use server';
 /**
@@ -70,6 +71,10 @@ const enhanceContentFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    return output!;
+    if (!output) {
+      throw new Error("AI failed to enhance content in the expected format.");
+    }
+    return output;
   }
 );
+

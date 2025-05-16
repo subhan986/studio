@@ -5,98 +5,99 @@
 
 @layer base {
   :root {
-    /* Light Theme (Inspired by the "Sign up" screen) */
-    --background: 0 0% 100%; /* White for main content background (cards, headers) */
-    --foreground: 222.2 84% 4.9%; /* Dark Blue/Black for text */
+    /* Light Purplish Pastel Theme */
+    --background: 270 60% 97%; /* Very light pastel purple / off-white with purple tint */
+    --foreground: 270 25% 35%; /* Muted dark grayish purple for text */
 
-    --card: 0 0% 100%; /* White */
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 270 70% 99%; /* Almost white with a hint of purple for cards */
+    --card-foreground: 270 25% 30%; /* Muted dark grayish purple for card text */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 270 70% 99%;
+    --popover-foreground: 270 25% 30%;
 
-    --primary: 262.1 83.3% 57.8%; /* Purple for links and primary actions */
-    --primary-foreground: 0 0% 100%; /* White text on primary */
+    --primary: 275 55% 72%; /* Soft medium pastel purple */
+    --primary-foreground: 270 20% 15%; /* Darker purple for text on primary */
 
-    --secondary: 210 40% 96.1%; /* Light gray for secondary elements */
-    --secondary-foreground: 222.2 47.4% 11.2%; /* Dark gray text on secondary */
+    --secondary: 270 50% 92%; /* Lighter pastel purple */
+    --secondary-foreground: 275 40% 45%; /* Muted purple for text on secondary */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%; /* Medium gray for muted text */
+    --muted: 270 40% 94%; /* Very light muted purple */
+    --muted-foreground: 270 20% 55%; /* Greyish purple for muted text */
 
-    --accent: 262.1 83.3% 57.8%; /* Purple */
-    --accent-foreground: 0 0% 100%;
+    --accent: 290 65% 78%; /* Pastel pinkish-purple / lavender */
+    --accent-foreground: 270 20% 15%; /* Darker purple for text on accent */
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 350 70% 70%; /* Soft pastel red */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%; /* Light gray border */
-    --input: 214.3 31.8% 91.4%; /* Light gray input background */
-    --ring: 262.1 83.3% 57.8%; /* Purple for focus rings */
+    --border: 270 50% 90%; /* Light pastel purple border */
+    --input: 270 50% 94%; /* Light pastel purple input background */
+    --ring: 275 55% 72%; /* Primary color for focus rings */
 
     --radius: 0.75rem; /* Slightly more rounded */
 
-    /* Chart colors for light theme */
-    --chart-1: 262.1 83.3% 57.8%; /* Purple */
-    --chart-2: 193.2 98.2% 40.2%; /* Teal/Blue from gradient */
-    --chart-3: 36.2 98.2% 50.2%;  /* Orange from gradient */
-    --chart-4: 330 80% 60%; /* Pink from gradient */
-    --chart-5: 240 70% 65%; /* Indigo */
+    /* Chart colors for light purplish pastel theme */
+    --chart-1: 275 55% 72%; /* primary */
+    --chart-2: 290 65% 78%; /* accent */
+    --chart-3: 260 60% 80%; /* Lighter complementary pastel purple */
+    --chart-4: 300 50% 75%; /* Pastel magenta/pink */
+    --chart-5: 240 50% 82%; /* Pastel blueish-purple */
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222.2 84% 4.9%;
-    --sidebar-primary: 262.1 83.3% 57.8%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 210 40% 96.1%;
-    --sidebar-accent-foreground: 222.2 47.4% 11.2%;
-    --sidebar-border: 214.3 31.8% 91.4%;
-    --sidebar-ring: 262.1 83.3% 57.8%;
+    --sidebar-background: 270 60% 98%;
+    --sidebar-foreground: 270 25% 35%;
+    --sidebar-primary: 275 55% 72%;
+    --sidebar-primary-foreground: 270 20% 15%;
+    --sidebar-accent: 270 50% 92%;
+    --sidebar-accent-foreground: 275 40% 45%;
+    --sidebar-border: 270 50% 90%;
+    --sidebar-ring: 275 55% 72%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%; /* Dark Blue/Black */
-    --foreground: 210 40% 98%; /* Light Gray/White for text */
+    /* Dark Purplish Pastel Theme */
+    --background: 270 20% 12%; /* Deep muted purple */
+    --foreground: 270 45% 92%; /* Light pastel purple text */
 
-    --card: 222.2 47.4% 11.2%; /* Darker card background */
-    --card-foreground: 210 40% 98%;
+    --card: 270 22% 18%; /* Slightly lighter deep muted purple for cards */
+    --card-foreground: 270 45% 90%; /* Light pastel purple text for card */
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 270 20% 10%;
+    --popover-foreground: 270 45% 92%;
 
-    --primary: 262.1 83.3% 67.8%; /* Lighter Purple for dark mode */
-    --primary-foreground: 0 0% 98%; 
+    --primary: 275 65% 78%; /* Brighter pastel purple, but still soft */
+    --primary-foreground: 270 15% 10%; /* Very dark purple for text on primary */
 
-    --secondary: 217.2 32.6% 17.5%; /* Dark gray for secondary elements */
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 270 25% 22%; /* Darker muted purple */
+    --secondary-foreground: 270 40% 88%; /* Lighter pastel purple text */
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%; /* Lighter gray for muted text */
+    --muted: 270 20% 16%; /* Very dark muted purple */
+    --muted-foreground: 270 30% 75%; /* Greyish pastel purple */
 
-    --accent: 262.1 83.3% 67.8%; /* Lighter Purple */
-    --accent-foreground: 0 0% 98%;
+    --accent: 290 70% 82%; /* Brighter pastel pinkish-purple */
+    --accent-foreground: 270 15% 10%; /* Very dark purple for text on accent */
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 350 60% 65%; /* Muted dark pastel red */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 17.5%; /* Darker gray border */
-    --input: 217.2 32.6% 17.5%; /* Darker gray input background */
-    --ring: 262.1 83.3% 67.8%; /* Lighter Purple for focus rings */
+    --border: 270 20% 25%; /* Dark purple border */
+    --input: 270 20% 20%; /* Dark purple input background */
+    --ring: 275 65% 78%; /* Primary color for focus rings */
     
-    /* Chart colors for dark theme */
-    --chart-1: 262.1 83.3% 67.8%; 
-    --chart-2: 193.2 98.2% 50.2%; 
-    --chart-3: 36.2 98.2% 60.2%;  
-    --chart-4: 330 80% 70%; 
-    --chart-5: 240 70% 75%;
+    /* Chart colors for dark purplish pastel theme */
+    --chart-1: 275 65% 78%;
+    --chart-2: 290 70% 82%;
+    --chart-3: 260 65% 85%;
+    --chart-4: 300 55% 80%;
+    --chart-5: 240 55% 88%;
 
-    --sidebar-background: 222.2 84% 4.9%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 262.1 83.3% 67.8%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 217.2 32.6% 17.5%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217.2 32.6% 17.5%;
-    --sidebar-ring: 262.1 83.3% 67.8%;
+    --sidebar-background: 270 20% 12%;
+    --sidebar-foreground: 270 45% 92%;
+    --sidebar-primary: 275 65% 78%;
+    --sidebar-primary-foreground: 270 15% 10%;
+    --sidebar-accent: 270 25% 22%;
+    --sidebar-accent-foreground: 270 40% 88%;
+    --sidebar-border: 270 20% 25%;
+    --sidebar-ring: 275 65% 78%;
   }
 }
 
@@ -108,10 +109,44 @@
     @apply text-foreground; /* Default text color */
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     min-height: 100vh;
-    background: linear-gradient(135deg, #6e45e2, #88d3ce, #fd6c6c, #f5af19, #f12711); /* Orange, Red, Teal, Purple */
+  }
+
+  /* Animated Purplish Pastel Gradient Background */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, 
+      hsl(275, 70%, 85%), /* Soft Lilac */
+      hsl(260, 80%, 90%), /* Light Lavender */
+      hsl(280, 60%, 82%), /* Muted Orchid */
+      hsl(270, 75%, 88%), /* Pale Purple */
+      hsl(290, 65%, 86%)  /* Light Pinkish Purple */
+    );
     background-size: 400% 400%;
     animation: gradientBG 25s ease infinite;
+    z-index: -1; /* Ensure it's behind all content */
+    opacity: 0.8; /* Adjust for subtlety if needed */
   }
+
+  .dark body::before {
+    background: linear-gradient(135deg, 
+      hsl(275, 40%, 25%), /* Deeper Soft Lilac */
+      hsl(260, 50%, 30%), /* Deeper Light Lavender */
+      hsl(280, 30%, 22%), /* Deeper Muted Orchid */
+      hsl(270, 45%, 28%), /* Deeper Pale Purple */
+      hsl(290, 35%, 26%)  /* Deeper Light Pinkish Purple */
+    );
+    background-size: 400% 400%;
+    animation: gradientBG 25s ease infinite;
+    opacity: 0.9;
+  }
+
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-playfair-display), serif;
@@ -130,20 +165,25 @@
   }
 }
 
-/* Simpler card hover effect */
+/* Simpler card hover effect suitable for pastel theme */
 .card-hover:hover {
-    @apply shadow-xl; /* Using Tailwind's default shadow for simplicity */
+    @apply shadow-xl; 
     transform: translateY(-2px);
     transition-property: transform, box-shadow;
     transition-duration: 0.3s;
     transition-timing-function: ease-in-out;
 }
 
-.sticky-header {
-  @apply sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60;
+.dark .card-hover:hover {
+    box-shadow: 0 10px 15px -3px hsla(var(--primary) / 0.3), 0 4px 6px -4px hsla(var(--primary) / 0.2);
 }
 
-/* Removed playful-tilt, pulse-soft, shake-gentle animations */
+
+.sticky-header {
+  @apply sticky top-0 z-50 w-full border-b border-border/40 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75;
+}
+
+
 /* Retain accordion animations if needed */
 @keyframes accordion-down {
   from { height: 0; }

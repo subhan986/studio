@@ -5,7 +5,63 @@
 
 @layer base {
   :root {
-    /* Cosmic Glow Theme - Dark Mode Only */
+    /* Light Theme - Professional & Clean */
+    --background: hsl(220 60% 97%); /* Very light, slightly cool grey/blue */
+    --foreground: hsl(220 15% 25%); /* Dark, slightly desaturated blue for text */
+
+    --card: hsl(0 0% 100%); /* White */
+    --card-foreground: hsl(220 15% 25%);
+
+    --popover: hsl(0 0% 100%);
+    --popover-foreground: hsl(220 15% 25%);
+
+    --primary: hsl(250 70% 55%); /* A professional, clear purple */
+    --primary-foreground: hsl(0 0% 100%);
+
+    --secondary: hsl(220 30% 92%); /* Lighter grey for UI elements */
+    --secondary-foreground: hsl(220 10% 45%);
+
+    --muted: hsl(220 30% 95%);
+    --muted-foreground: hsl(220 10% 65%);
+
+    --accent: hsl(280 70% 60%); /* A brighter, lighter purple for accents */
+    --accent-foreground: hsl(0 0% 100%);
+
+    --destructive: hsl(0 80% 60%);
+    --destructive-foreground: hsl(0 0% 100%);
+
+    --border: hsl(220 25% 88%);
+    --input: hsl(220 25% 94%);
+    --ring: hsl(250 70% 55%); /* Primary color */
+
+    --radius: 0.75rem;
+
+    /* Agent Specific Accent Colors (Can be same for light/dark or adjusted) */
+    --scraper-accent: hsl(195, 100%, 45%); /* Slightly less intense for light */
+    --validator-accent: hsl(300, 100%, 45%);/* Slightly less intense for light */
+    --enhancer-accent-base: hsl(288, 60%, 50%);
+    --enhancer-accent-gold: hsl(45, 90%, 50%);
+
+    /* Chart colors for light theme */
+    --chart-1: hsl(250 70% 55%);
+    --chart-2: hsl(195 100% 45%);
+    --chart-3: hsl(300 100% 45%);
+    --chart-4: hsl(280 70% 60%);
+    --chart-5: hsl(45 90% 50%);
+
+    /* Sidebar colors for light theme */
+    --sidebar-background: hsl(220 60% 97%);
+    --sidebar-foreground: hsl(220 15% 25%);
+    --sidebar-primary: hsl(250 70% 55%);
+    --sidebar-primary-foreground: hsl(0 0% 100%);
+    --sidebar-accent: hsl(280 70% 60%);
+    --sidebar-accent-foreground: hsl(0 0% 100%);
+    --sidebar-border: hsl(220 25% 88%);
+    --sidebar-ring: hsl(250 70% 55%);
+  }
+
+  .dark {
+    /* Cosmic Glow Theme - Dark Mode */
     --background: hsl(248, 42%, 8%); /* #0D0B1A Deep Space Black */
     --foreground: hsl(0, 0%, 94%); /* #F0F0F0 Soft White */
 
@@ -34,22 +90,20 @@
     --input: hsl(273, 22%, 28%); /* Similar to border */
     --ring: hsl(288, 100%, 72%); /* Vibrant Orchid Glow for focus rings */
 
-    --radius: 0.75rem; /* Rounded-lg by default for cards etc. */
-
-    /* Agent Specific Accent Colors */
+    /* Agent Specific Accent Colors for Dark Mode */
     --scraper-accent: hsl(195, 100%, 50%); /* #00C0FF Electric Cosmic Blue */
     --validator-accent: hsl(300, 100%, 50%); /* #FF00FF Pure Magenta */
     --enhancer-accent-base: hsl(288, 63%, 40%); /* #8E24AA Deep Violet */
     --enhancer-accent-gold: hsl(45, 100%, 51%); /* #FFC107 Amber/Gold */
 
-    /* Chart colors - Using general glows and agent accents */
+    /* Chart colors for dark theme */
     --chart-1: hsl(288, 100%, 72%); /* Vibrant Orchid */
     --chart-2: hsl(195, 100%, 50%); /* Scraper Blue */
     --chart-3: hsl(300, 100%, 50%); /* Validator Magenta */
     --chart-4: hsl(277, 83%, 80%); /* Soft Lavender */
     --chart-5: hsl(45, 100%, 51%); /* Enhancer Gold */
 
-    /* Sidebar colors - will use the main theme */
+    /* Sidebar colors for dark theme */
     --sidebar-background: var(--background);
     --sidebar-foreground: var(--foreground);
     --sidebar-primary: var(--primary);
@@ -59,11 +113,6 @@
     --sidebar-border: var(--border);
     --sidebar-ring: var(--ring);
   }
-
-  /* Ensure dark class is applied for ShadCN components that might rely on it, even if it's the only theme */
-  .dark {
-    /* All variables are already in :root for dark-only, this is for compatibility */
-  }
 }
 
 @layer base {
@@ -71,12 +120,17 @@
     @apply border-border;
   }
   body {
-    /* @apply bg-background text-foreground; */ /* Replaced by animated gradient */
-    @apply text-foreground;
+    @apply bg-background text-foreground;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     min-height: 100vh;
-    text-shadow: 0 0 5px hsla(var(--foreground), 0.3); /* Subtle global text glow */
-    
+  }
+  
+  .dark body {
+    text-shadow: 0 0 5px hsla(var(--foreground), 0.3); /* Subtle global text glow for dark mode */
+  }
+
+  /* Animated Background for Dark Mode */
+  .dark body {
     background: linear-gradient(300deg, 
       hsl(var(--background)) 0%, 
       hsl(var(--scraper-accent) / 0.3) 25%, 
@@ -88,56 +142,83 @@
     animation: animatedCosmicBackground 45s ease infinite;
   }
 
+  /* For light mode, a simpler, non-animated background might be better, or a very subtle one */
+  /* Default body background already set by @apply bg-background */
+
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-playfair-display), serif;
-    /* text-shadow: 0 0 8px hsla(var(--primary), 0.5); */ /* Optional: primary color glow for headers */
+  }
+  
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+     /* Optional: primary color glow for headers in dark mode */
+    /* text-shadow: 0 0 8px hsla(var(--primary), 0.5); */
   }
 }
 
-/* Glow effects */
+/* Glow effects & Agent Specifics - primarily for dark mode, light mode uses simpler shadows */
 .card-glow-hover {
   transition: box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
-.card-glow-hover:hover {
+.dark .card-glow-hover:hover {
   transform: translateY(-2px) scale(1.01);
   box-shadow: 0 0 15px 2px hsla(var(--primary), 0.4), 0 0 25px 5px hsla(var(--accent), 0.3);
 }
+/* Light mode card hover - more subtle */
+:not(.dark) .card-glow-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px hsla(var(--primary), 0.15), 0 2px 6px hsla(var(--primary), 0.1);
+}
 
-/* Agent-specific card styling */
-.agent-card[data-agent-type="scraper"] .agent-card-header {
+
+.dark .agent-card[data-agent-type="scraper"] .agent-card-header {
   box-shadow: -5px 0 15px -5px var(--scraper-accent);
 }
-.agent-card[data-agent-type="scraper"] .agent-icon {
+.dark .agent-card[data-agent-type="scraper"] .agent-icon {
   color: var(--scraper-accent);
   filter: drop-shadow(0 0 5px var(--scraper-accent));
 }
-.agent-card[data-agent-type="scraper"] .agent-title {
+.dark .agent-card[data-agent-type="scraper"] .agent-title {
   color: var(--scraper-accent);
   text-shadow: 0 0 8px hsla(var(--scraper-accent), 0.7);
 }
+/* Light mode agent colors - use primary for emphasis */
+:not(.dark) .agent-card[data-agent-type="scraper"] .agent-icon,
+:not(.dark) .agent-card[data-agent-type="scraper"] .agent-title {
+  color: var(--primary);
+}
 
-.agent-card[data-agent-type="validator"] .agent-card-header {
+
+.dark .agent-card[data-agent-type="validator"] .agent-card-header {
   box-shadow: -5px 0 15px -5px var(--validator-accent);
 }
-.agent-card[data-agent-type="validator"] .agent-icon {
+.dark .agent-card[data-agent-type="validator"] .agent-icon {
   color: var(--validator-accent);
   filter: drop-shadow(0 0 5px var(--validator-accent));
 }
-.agent-card[data-agent-type="validator"] .agent-title {
+.dark .agent-card[data-agent-type="validator"] .agent-title {
   color: var(--validator-accent);
   text-shadow: 0 0 8px hsla(var(--validator-accent), 0.7);
 }
+:not(.dark) .agent-card[data-agent-type="validator"] .agent-icon,
+:not(.dark) .agent-card[data-agent-type="validator"] .agent-title {
+  color: var(--primary);
+}
 
-.agent-card[data-agent-type="enhancer"] .agent-card-header {
+.dark .agent-card[data-agent-type="enhancer"] .agent-card-header {
   box-shadow: -5px 0 15px -5px var(--enhancer-accent-base);
 }
-.agent-card[data-agent-type="enhancer"] .agent-icon {
+.dark .agent-card[data-agent-type="enhancer"] .agent-icon {
   color: var(--enhancer-accent-base); /* Base color for icon */
   filter: drop-shadow(0 0 5px var(--enhancer-accent-base));
 }
-.agent-card[data-agent-type="enhancer"] .agent-title {
+.dark .agent-card[data-agent-type="enhancer"] .agent-title {
   color: var(--enhancer-accent-gold);
   text-shadow: 0 0 8px hsla(var(--enhancer-accent-gold), 0.7);
+}
+:not(.dark) .agent-card[data-agent-type="enhancer"] .agent-icon,
+:not(.dark) .agent-card[data-agent-type="enhancer"] .agent-title {
+  color: var(--primary);
 }
 
 .sticky-header {
@@ -161,7 +242,7 @@
   100% { background-position: 0% 50%; }
 }
 
-.animated-section-container-bg {
+.dark .animated-section-container-bg {
   background: linear-gradient(120deg, 
     hsl(var(--primary) / 0.15), 
     hsl(var(--accent) / 0.1), 
@@ -173,6 +254,12 @@
   position: relative; 
   z-index: 0; 
 }
+:not(.dark) .animated-section-container-bg {
+  @apply bg-secondary/30; /* Simpler background for light mode section */
+  position: relative; 
+  z-index: 0;
+}
+
 
 @keyframes animatedSectionBackground {
   0% { background-position: 0% 50%; }

@@ -1,9 +1,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ExternalLink, Zap, CircleCheckBig, ChartNoAxesColumnIncreasing, Brain } from "lucide-react";
+import { ExternalLink, Zap, CircleCheckBig, ChartNoAxesColumnIncreasing } from "lucide-react";
 import Link from 'next/link';
 import Image from 'next/image';
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function LandingPage() {
   return (
@@ -22,14 +23,14 @@ export default function LandingPage() {
             />
           </Link>
           <nav className="flex items-center space-x-1 sm:space-x-2 ml-auto">
-            {/* Future nav items can go here */}
+            <ThemeToggle />
           </nav>
         </div>
       </header>
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="py-24 md:py-32 lg:py-40"> {/* Increased padding */}
+        <section className="py-24 md:py-32 lg:py-40">
           <div className="container mx-auto px-4 sm:px-6 text-center">
             <Card className="max-w-3xl mx-auto p-6 sm:p-10 shadow-lg bg-card card-glow-hover">
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-primary mb-6">

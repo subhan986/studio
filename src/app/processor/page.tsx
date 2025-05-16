@@ -3,6 +3,7 @@ import { UrlProcessorPageClient } from '@/components/UrlProcessorPageClient';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function ProcessorPage() {
   return (
@@ -15,7 +16,7 @@ export default function ProcessorPage() {
               alt="Tri-AI Logo"
               width={150}
               height={50}
-              className="h-auto w-auto object-contain"
+              className="h-auto w-auto object-contain animate-playful-tilt"
               data-ai-hint="cosmic logo"
             />
           </Link>
@@ -23,7 +24,7 @@ export default function ProcessorPage() {
             <Button variant="ghost" asChild>
               <Link href="/">Home</Link>
             </Button>
-            {/* ThemeToggle would go here if re-enabled */}
+            <ThemeToggle />
           </nav>
         </div>
       </header>

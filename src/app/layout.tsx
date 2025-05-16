@@ -1,8 +1,7 @@
 
 import type {Metadata} from 'next';
 import { Playfair_Display } from 'next/font/google';
-// import { GeistSans } from 'geist/font/sans'; // Removed due to missing package
-// import { GeistMono } from 'geist/font/mono'; // Removed due to missing package
+// System font will be used for body from globals.css
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
@@ -23,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en"> 
       <body className={`${playfairDisplay.variable} antialiased`}>
         {children}
         <Toaster />

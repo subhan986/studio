@@ -2,7 +2,7 @@
 import { UrlProcessorPageClient } from '@/components/UrlProcessorPageClient';
 import { Brain } from 'lucide-react';
 import Link from 'next/link';
-import { ThemeToggle } from '@/components/ThemeToggle'; 
+// ThemeToggle removed for reset
 import { Button } from '@/components/ui/button';
 
 export default function ProcessorPage() {
@@ -11,18 +11,18 @@ export default function ProcessorPage() {
       <header className="sticky-header"> 
         <div className="container flex h-16 sm:h-20 items-center">
           <Link href="/" className="flex items-center space-x-2 sm:space-x-3 rtl:space-x-reverse">
-            <Brain className="h-8 w-8 sm:h-10 sm:w-10 text-primary" /> 
+            <Brain className="h-8 w-8 sm:h-10 sm:w-10 text-primary" /> {/* Removed animation class */}
             <h1 className="text-2xl sm:text-3xl font-bold font-display text-primary">Tri-AI</h1>
           </Link>
           <nav className="flex items-center space-x-1 sm:space-x-2 ml-auto">
             <Button variant="ghost" asChild>
               <Link href="/">Home</Link>
             </Button>
-            <ThemeToggle /> 
+            {/* ThemeToggle removed */}
           </nav>
         </div>
       </header>
-      <main className="flex-grow container mx-auto p-4 sm:p-6 md:p-10 bg-background"> {/* Added bg-background here */}
+      <main className="flex-grow container mx-auto p-4 sm:p-6 md:p-10"> {/* Removed explicit bg-background */}
         <UrlProcessorPageClient /> 
       </main>
       <footer className="py-8 border-t border-border/30 bg-background/80"> 
@@ -34,4 +34,3 @@ export default function ProcessorPage() {
     </div>
   );
 }
-

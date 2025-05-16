@@ -144,7 +144,7 @@ export function AgentResultCard({ agentName, icon, result }: AgentResultCardProp
     if (result.status === 'error' && result.error) {
       return (
         <Alert variant="destructive" className="mt-4">
-          <XCircle className="h-5 w-5 animate-shake-gentle" />
+          <XCircle className="h-5 w-5" /> {/* Removed animation class */}
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{result.error}</AlertDescription>
         </Alert>
@@ -154,7 +154,7 @@ export function AgentResultCard({ agentName, icon, result }: AgentResultCardProp
       return (
         <>
           <Alert variant="default" className="mt-4 bg-primary/10 border-primary/30">
-            <CheckCircle2 className="h-5 w-5 text-primary animate-pulse-soft" />
+            <CheckCircle2 className="h-5 w-5 text-primary" /> {/* Removed animation class */}
             <AlertTitle className="text-primary">Success</AlertTitle>
             <AlertDescription className="text-primary/80">Data processed successfully.</AlertDescription>
           </Alert>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from 'react';
@@ -17,14 +18,15 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { processUrlAction, ProcessUrlActionResponse } from '@/app/actions/processUrlAction';
 import { useToast } from "@/hooks/use-toast";
-import { AgentResultCard, AgentResultData } from '@/components/AgentResultCard';
+import { AgentResultCard, AgentResultData, AgentName as AgentCardName } from '@/components/AgentResultCard'; // Renamed AgentName to AgentCardName
 import { Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
   url: z.string().url({ message: "Please enter a valid URL." }).min(1, { message: "URL cannot be empty." }),
 });
 
-export type AgentName = 'scraper' | 'validator' | 'enhancer';
+// This type is for the internal state management of results
+export type LocalAgentName = 'scraper' | 'validator' | 'enhancer';
 
 const initialAgentState: AgentResultData = {
   data: null,
@@ -33,7 +35,7 @@ const initialAgentState: AgentResultData = {
 };
 
 export function UrlProcessorPageClient() {
-  const [results, setResults] = useState<Record<AgentName, AgentResultData>>({
+  const [results, setResults] = useState<Record<LocalAgentName, AgentResultData>>({
     scraper: { ...initialAgentState },
     validator: { ...initialAgentState },
     enhancer: { ...initialAgentState },

@@ -9,13 +9,13 @@ import Image from 'next/image';
 export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <header className="sticky-header bg-background/95">
-        <div className="container flex h-16 sm:h-20 items-center justify-between">
+      <header className="sticky-header bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+        <div className="container flex h-16 sm:h-20 items-center">
           <Link href="/" className="flex items-center space-x-2 sm:space-x-3 rtl:space-x-reverse">
             <Brain className="h-8 w-8 sm:h-10 sm:w-10 text-primary animate-playful-tilt" />
             <h1 className="text-2xl sm:text-3xl font-bold font-display text-primary">Tri-AI</h1>
           </Link>
-          <nav className="flex items-center space-x-1 sm:space-x-2">
+          <nav className="flex items-center space-x-1 sm:space-x-2 ml-auto">
             <ThemeToggle /> 
           </nav>
         </div>
@@ -23,7 +23,7 @@ export default function LandingPage() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="py-16 md:py-24 lg:py-32 bg-background">
+        <section className="py-16 md:py-24 lg:py-32 bg-transparent">
           <div className="container mx-auto px-4 sm:px-6 text-center">
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-display text-primary mb-6">
               Unlock Web Insights with Tri-AI
@@ -31,7 +31,7 @@ export default function LandingPage() {
             <p className="text-lg sm:text-xl md:text-2xl text-foreground/80 mb-10 max-w-3xl mx-auto">
               Tri-AI is your intelligent assistant for scraping, validating, and enhancing content from any article URL. Transform raw web data into structured, reliable, and polished information effortlessly.
             </p>
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg py-3 px-6 sm:py-4 sm:px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+            <Button asChild size="lg" className="font-semibold text-lg py-3 px-6 sm:py-4 sm:px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
               <Link href="/processor" className="flex items-center">
                 Get Started <ExternalLink className="ml-2 h-5 w-5" />
               </Link>

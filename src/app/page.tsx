@@ -1,22 +1,22 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ExternalLink, Zap, CircleCheckBig, ChartNoAxesColumnIncreasing, Brain } from "lucide-react";
+import { ExternalLink, Zap, CircleCheckBig, ChartNoAxesColumnIncreasing } from "lucide-react";
 import Link from 'next/link';
 import Image from 'next/image';
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <header className="sticky-header">
         <div className="container flex h-16 sm:h-20 items-center">
-          <Link href="/" className="flex h-full items-center">
+          <Link href="/" className="flex h-full items-center"> {/* Modified: Added h-full */}
             <Image
               src="https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx2ZWN0b3J8ZW58MHx8fHwxNzQ3NDIzNDcyfDA&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Tri-AI Logo"
-              width={150}
-              height={50}
+              width={150} 
+              height={50} 
               className="h-auto w-auto object-contain animate-playful-tilt"
               priority
             />
@@ -40,7 +40,7 @@ export default function LandingPage() {
               </p>
               <Button asChild size="lg" className="font-semibold text-lg py-3 px-6 sm:py-4 sm:px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
                 <Link href="/processor" className="flex items-center">
-                  <span className="flex items-center">
+                  <span className="flex items-center"> {/* Added span wrapper */}
                     Get Started <ExternalLink className="ml-2 h-5 w-5" />
                   </span>
                 </Link>

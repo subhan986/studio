@@ -6,18 +6,18 @@ import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
-  // Initialize theme from localStorage or default to 'light'
-  const [theme, setThemeState] = React.useState<"light" | "dark">("light");
+  // Initialize theme from localStorage or default to 'dark'
+  const [theme, setThemeState] = React.useState<"light" | "dark">("dark");
 
   React.useEffect(() => {
     // This effect runs once on mount to set the initial theme based on localStorage
     if (typeof window !== "undefined") {
       const storedTheme = localStorage.getItem("theme");
-      if (storedTheme === "dark") {
-        setThemeState("dark");
+      if (storedTheme === "light") {
+        setThemeState("light");
       } else {
-        // Default to light if no theme or 'light' is stored
-        setThemeState("light"); 
+        // Default to dark if no theme or 'dark' is stored
+        setThemeState("dark"); 
       }
     }
   }, []);

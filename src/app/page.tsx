@@ -1,18 +1,26 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Brain, ExternalLink, Zap } from "lucide-react";
+import { ExternalLink, Zap } from "lucide-react";
 import Link from 'next/link';
-import { CircleCheckBig, ChartNoAxesColumnIncreasing } from 'lucide-react'; // Re-added missing imports from previous reset
+import Image from 'next/image'; // Added for image logo
+import { CircleCheckBig, ChartNoAxesColumnIncreasing } from 'lucide-react';
 
 export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen"> 
       <header className="sticky-header"> 
         <div className="container flex h-16 sm:h-20 items-center">
-          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 rtl:space-x-reverse">
-            <Brain className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
-            <h1 className="text-2xl sm:text-3xl font-bold font-display text-primary">Tri-AI</h1>
+          <Link href="/" className="flex items-center"> {/* Removed space-x as image is the main content */}
+            <Image
+              src="https://placehold.co/120x40.png"
+              alt="Tri-AI Logo"
+              width={120}
+              height={40}
+              className="h-10 w-auto" // Adjust height as needed, width will scale
+              data-ai-hint="logo brand"
+              priority // For LCP on landing page
+            />
           </Link>
           <nav className="flex items-center space-x-1 sm:space-x-2 ml-auto">
             {/* ThemeToggle removed in UI reset */}
@@ -33,8 +41,7 @@ export default function LandingPage() {
               </p>
               <Button asChild size="lg" className="font-semibold text-lg py-3 px-6 sm:py-4 sm:px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
                 <Link href="/processor" className="flex items-center">
-                  {/* Ensured single child (span) for the Link component */}
-                  <span className="flex items-center">
+                  <span className="flex items-center"> {/* Ensured single child for Link */}
                     Get Started <ExternalLink className="ml-2 h-5 w-5" />
                   </span>
                 </Link>
@@ -49,7 +56,7 @@ export default function LandingPage() {
             <h3 className="text-3xl sm:text-4xl font-bold font-display text-center text-primary mb-12 sm:mb-16">
               How Tri-AI Works
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"> {/* Adjusted gap for responsiveness */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-8 lg:gap-12"> {/* Adjusted gap for responsiveness */}
               <Card className="card-hover bg-card border-border/50 shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <CardHeader className="items-center text-center">
                   <div className="p-3 sm:p-4 bg-primary/10 rounded-full mb-3 sm:mb-4">
@@ -66,7 +73,7 @@ export default function LandingPage() {
               <Card className="card-hover bg-card border-border/50 shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <CardHeader className="items-center text-center">
                   <div className="p-3 sm:p-4 bg-primary/10 rounded-full mb-3 sm:mb-4">
-                    <CircleCheckBig className="h-8 w-8 sm:h-10 sm:w-10 text-primary" /> {/* Changed icon */}
+                    <CircleCheckBig className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
                   </div>
                   <CardTitle className="font-display text-xl sm:text-2xl text-primary">2. Validate Information</CardTitle>
                 </CardHeader>
@@ -79,7 +86,7 @@ export default function LandingPage() {
               <Card className="card-hover bg-card border-border/50 shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <CardHeader className="items-center text-center">
                   <div className="p-3 sm:p-4 bg-primary/10 rounded-full mb-3 sm:mb-4">
-                    <ChartNoAxesColumnIncreasing className="h-8 w-8 sm:h-10 sm:w-10 text-primary" /> {/* Changed icon */}
+                    <ChartNoAxesColumnIncreasing className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
                   </div>
                   <CardTitle className="font-display text-xl sm:text-2xl text-primary">3. Enhance & Refine</CardTitle>
                 </CardHeader>

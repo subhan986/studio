@@ -1,8 +1,7 @@
 
 import { UrlProcessorPageClient } from '@/components/UrlProcessorPageClient';
-import { Brain } from 'lucide-react';
 import Link from 'next/link';
-// ThemeToggle removed for reset
+import Image from 'next/image'; // Added for image logo
 import { Button } from '@/components/ui/button';
 
 export default function ProcessorPage() {
@@ -10,9 +9,15 @@ export default function ProcessorPage() {
     <div className="flex flex-col min-h-screen"> 
       <header className="sticky-header"> 
         <div className="container flex h-16 sm:h-20 items-center">
-          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 rtl:space-x-reverse">
-            <Brain className="h-8 w-8 sm:h-10 sm:w-10 text-primary" /> {/* Removed animation class */}
-            <h1 className="text-2xl sm:text-3xl font-bold font-display text-primary">Tri-AI</h1>
+          <Link href="/" className="flex items-center"> {/* Removed space-x as image is the main content */}
+            <Image
+              src="https://placehold.co/120x40.png"
+              alt="Tri-AI Logo"
+              width={120}
+              height={40}
+              className="h-10 w-auto" // Adjust height as needed, width will scale
+              data-ai-hint="logo brand"
+            />
           </Link>
           <nav className="flex items-center space-x-1 sm:space-x-2 ml-auto">
             <Button variant="ghost" asChild>
@@ -22,7 +27,7 @@ export default function ProcessorPage() {
           </nav>
         </div>
       </header>
-      <main className="flex-grow container mx-auto p-4 sm:p-6 md:p-10"> {/* Removed explicit bg-background */}
+      <main className="flex-grow container mx-auto p-4 sm:p-6 md:p-10">
         <UrlProcessorPageClient /> 
       </main>
       <footer className="py-8 border-t border-border/30 bg-background/80"> 

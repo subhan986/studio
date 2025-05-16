@@ -154,6 +154,12 @@
   100% { transform: translateX(0) rotate(0deg); }
 }
 
+@keyframes playful-tilt {
+  0% { transform: rotate(-3deg) translateY(0px); }
+  50% { transform: rotate(3deg) translateY(-3px); }
+  100% { transform: rotate(-3deg) translateY(0px); }
+}
+
 .animate-pulse-soft {
   animation: pulse-soft 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
 }
@@ -162,3 +168,6 @@
   animation: shake-gentle 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
+.animate-playful-tilt {
+  animation: playful-tilt 3s infinite ease-in-out;
+}

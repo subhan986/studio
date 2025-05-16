@@ -12,7 +12,7 @@ export default function ProcessorPage() {
       <header className="sticky-header bg-background/95"> 
         <div className="container flex h-16 sm:h-20 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2 sm:space-x-3 rtl:space-x-reverse">
-            <Brain className="h-8 w-8 sm:h-10 sm:w-10 text-primary animate-pulse-soft" />
+            <Brain className="h-8 w-8 sm:h-10 sm:w-10 text-primary animate-playful-tilt" />
             <h1 className="text-2xl sm:text-3xl font-bold font-display text-primary">Tri-AI</h1>
           </Link>
           <nav className="flex items-center space-x-1 sm:space-x-2">

@@ -161,6 +161,25 @@
   100% { background-position: 0% 50%; }
 }
 
+.animated-section-container-bg {
+  background: linear-gradient(120deg, 
+    hsl(var(--primary) / 0.15), 
+    hsl(var(--accent) / 0.1), 
+    hsl(var(--secondary) / 0.15), 
+    hsl(var(--primary) / 0.1)
+  );
+  background-size: 300% 300%;
+  animation: animatedSectionBackground 30s ease infinite alternate;
+  position: relative; 
+  z-index: 0; 
+}
+
+@keyframes animatedSectionBackground {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 @keyframes playful-tilt {
   0%, 100% { transform: rotate(0deg) translateY(0px); }
   25% { transform: rotate(-8deg) translateY(-2px); }

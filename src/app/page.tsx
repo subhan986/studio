@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ExternalLink, Zap, CircleCheckBig, ChartNoAxesColumnIncreasing } from "lucide-react";
+import { ExternalLink, Zap, CircleCheckBig, ChartNoAxesColumnIncreasing, Brain } from "lucide-react";
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -51,11 +51,11 @@ export default function LandingPage() {
 
         {/* How It Works Section */}
         <section className="py-16 md:py-24">
-          <div className="container mx-auto px-4 sm:px-6">
-            <h3 className="text-3xl sm:text-4xl font-bold font-display text-center text-primary mb-12 sm:mb-16">
+          <div className="container mx-auto px-4 sm:px-6 animated-section-container-bg rounded-xl p-8 sm:p-12 shadow-xl">
+            <h3 className="text-3xl sm:text-4xl font-bold font-display text-center text-primary mb-12 sm:mb-16 relative z-10">
               How Tri-AI Works
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-12 relative z-10">
               <Card className="card-glow-hover bg-card border-border/50 shadow-lg">
                 <CardHeader className="items-center text-center">
                   <div className="p-3 sm:p-4 bg-primary/10 rounded-full mb-3 sm:mb-4">

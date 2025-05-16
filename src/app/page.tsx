@@ -1,28 +1,99 @@
 
-import { UrlProcessorPageClient } from '@/components/UrlProcessorPageClient';
-import { ThemeToggle } from '@/components/ThemeToggle';
-import { Brain } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Brain, Zap, CheckCircle, BarChart } from "lucide-react";
+import Link from 'next/link';
+import Image from 'next/image';
 
-export default function Home() {
+
+export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Brain className="h-8 w-8 text-primary" />
-            <h1 className="text-2xl font-bold text-primary">Tri-Agent Insights</h1>
-          </div>
-          <ThemeToggle />
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
+      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-20 items-center justify-between">
+          <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+            <Brain className="h-10 w-10 text-primary" />
+            <h1 className="text-3xl font-bold font-display text-primary">Tri-AI</h1>
+          </Link>
+          <nav className="flex items-center space-x-2">
+            <Button variant="ghost" asChild>
+              <Link href="/processor">Go to Processor</Link>
+            </Button>
+          </nav>
         </div>
       </header>
-      <main className="flex-grow container mx-auto p-6 md:p-10">
-        <UrlProcessorPageClient />
+
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <section className="py-20 md:py-32 bg-gradient-to-br from-background to-secondary/30">
+          <div className="container mx-auto px-6 text-center">
+            <h2 className="text-5xl md:text-7xl font-bold font-display text-primary mb-6">
+              Unlock Web Insights with Tri-AI
+            </h2>
+            <p className="text-xl md:text-2xl text-foreground/80 mb-10 max-w-3xl mx-auto">
+              Tri-AI is your intelligent assistant for scraping, validating, and enhancing content from any article URL. Transform raw web data into structured, reliable, and polished information effortlessly.
+            </p>
+            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg py-8 px-10 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+              <Link href="/processor">Get Started</Link>
+            </Button>
+          </div>
+        </section>
+
+        {/* How It Works Section */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-6">
+            <h3 className="text-4xl font-bold font-display text-center text-primary mb-16">
+              How Tri-AI Works
+            </h3>
+            <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+              <Card className="bg-card/80 border-border/50 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <CardHeader className="items-center text-center">
+                  <div className="p-4 bg-primary/10 rounded-full mb-4">
+                    <Zap className="h-10 w-10 text-primary" />
+                  </div>
+                  <CardTitle className="font-display text-2xl text-primary">1. Scrape Content</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-center text-foreground/70 text-base">
+                    Provide any article URL, and Tri-AI's first agent intelligently extracts the title, summary, key takeaways, and full text content, cutting through the noise.
+                  </CardDescription>
+                </CardContent>
+              </Card>
+              <Card className="bg-card/80 border-border/50 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <CardHeader className="items-center text-center">
+                  <div className="p-4 bg-primary/10 rounded-full mb-4">
+                    <CheckCircle className="h-10 w-10 text-primary" />
+                  </div>
+                  <CardTitle className="font-display text-2xl text-primary">2. Validate Information</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-center text-foreground/70 text-base">
+                    The second agent assesses the scraped content for apparent reliability and internal consistency, highlighting claims that might need further verification.
+                  </CardDescription>
+                </CardContent>
+              </Card>
+              <Card className="bg-card/80 border-border/50 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                <CardHeader className="items-center text-center">
+                  <div className="p-4 bg-primary/10 rounded-full mb-4">
+                    <BarChart className="h-10 w-10 text-primary" />
+                  </div>
+                  <CardTitle className="font-display text-2xl text-primary">3. Enhance & Refine</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-center text-foreground/70 text-base">
+                    Finally, the third agent takes the validated information and enhances it into well-written, comprehensive prose, ready for your use.
+                  </CardDescription>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
       </main>
-      <footer className="py-6 md:px-8 md:py-0 bg-background border-t">
-        <div className="container flex flex-col items-center justify-center gap-4 md:h-20 md:flex-row">
-          <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            Powered by Google Gemini.
-          </p>
+
+      <footer className="py-8 bg-secondary/20 border-t border-border/30">
+        <div className="container mx-auto px-6 text-center text-foreground/60">
+          <p>&copy; {new Date().getFullYear()} Tri-AI. All rights reserved.</p>
+          <p className="text-sm mt-1">Powered by Google Gemini.</p>
         </div>
       </footer>
     </div>

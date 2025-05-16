@@ -10,15 +10,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90", // Standard hover
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_10px_0_hsla(var(--primary),0.7),0_0_20px_0_hsla(var(--accent),0.5)] hover:shadow-[0_0_15px_2px_hsla(var(--primary),0.8),0_0_30px_5px_hsla(var(--accent),0.6)]",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-[0_0_10px_0_hsla(var(--destructive),0.7)] hover:shadow-[0_0_15px_2px_hsla(var(--destructive),0.8)]",
         outline:
-          "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground", 
+          "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground shadow-[0_0_8px_0_hsla(var(--accent),0.5)] hover:shadow-[0_0_12px_2px_hsla(var(--accent),0.7)]",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        link: "text-primary underline-offset-4 hover:underline hover:text-accent",
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { processUrlAction, ProcessUrlActionResponse } from '@/app/actions/processUrlAction';
 import { useToast } from "@/hooks/use-toast";
-import { AgentResultCard, AgentResultData } from '@/components/AgentResultCard'; 
+import { AgentResultCard, AgentResultData } from '@/components/AgentResultCard';
 import { Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
@@ -113,7 +113,7 @@ export function UrlProcessorPageClient() {
 
   return (
     <div className="space-y-8 sm:space-y-10">
-      <Card className="shadow-lg border-border/70 card-hover">
+      <Card className="shadow-lg border-border/70 card-glow-hover">
         <CardHeader>
           <CardTitle className="text-lg sm:text-xl">Process Article URL</CardTitle>
           <CardDescription className="text-sm sm:text-base">Enter an article URL to extract, validate its content, and enhance information using AI agents.</CardDescription>
@@ -151,16 +151,16 @@ export function UrlProcessorPageClient() {
 
       {showResults && (
         <div className="space-y-6 sm:space-y-8">
-            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground/90 mb-2">Processing Results</h2>
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-primary mb-2">Processing Results</h2>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <AgentResultCard agentName="Article Scraper" icon="SearchCode" result={results.scraper} />
-                <AgentResultCard agentName="Article Validator" icon="ShieldCheck" result={results.validator} />
-                <AgentResultCard agentName="Content Enhancer" icon="Sparkles" result={results.enhancer} />
+                <AgentResultCard agentName="Article Scraper" agentType="scraper" icon="SearchCode" result={results.scraper} />
+                <AgentResultCard agentName="Article Validator" agentType="validator" icon="ShieldCheck" result={results.validator} />
+                <AgentResultCard agentName="Content Enhancer" agentType="enhancer" icon="Sparkles" result={results.enhancer} />
             </div>
         </div>
       )}
       {!showResults && !isProcessing && (
-         <Card className="shadow-lg card-hover">
+         <Card className="shadow-lg card-glow-hover">
             <CardContent className="pt-6">
               <p className="text-center text-muted-foreground">Enter an article URL above and click "Process Article URL" to see the AI agents in action.</p>
             </CardContent>

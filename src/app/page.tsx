@@ -7,22 +7,22 @@ import Image from 'next/image';
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
-      <header className="sticky-header bg-background/90 backdrop-blur-sm">
+    <div className="flex flex-col min-h-screen">
+      <header className="sticky-header">
         <div className="container flex h-16 sm:h-20 items-center">
-          <Link href="/" className="flex h-full items-center"> {/* Modified: Added h-full */}
+          <Link href="/" className="flex h-full items-center">
             <Image
-              src="https://images.unsplash.com/photo-1617791160536-598cf32026fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxicmFpbnxlbnwwfHx8fDE3NDc0MTgzMjN8MA&ixlib=rb-4.1.0&q=80&w=1080"
+              src="https://placehold.co/150x50.png"
               alt="Tri-AI Logo"
-              width={120}
-              height={40}
-              className="h-full w-auto object-contain" // Modified: Image takes full height of Link, width auto, object-contain
-              data-ai-hint="brain logo"
+              width={150}
+              height={50}
+              className="h-auto w-auto object-contain"
+              data-ai-hint="cosmic logo"
               priority
             />
           </Link>
           <nav className="flex items-center space-x-1 sm:space-x-2 ml-auto">
-            {/* ThemeToggle is managed by its own component if active */}
+            {/* Future nav items can go here */}
           </nav>
         </div>
       </header>
@@ -31,7 +31,7 @@ export default function LandingPage() {
         {/* Hero Section */}
         <section className="py-16 md:py-24 lg:py-32">
           <div className="container mx-auto px-4 sm:px-6 text-center">
-            <Card className="max-w-3xl mx-auto p-6 sm:p-10 shadow-xl bg-card/80 backdrop-blur-md rounded-xl">
+            <Card className="max-w-3xl mx-auto p-6 sm:p-10 shadow-lg bg-card card-glow-hover">
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-primary mb-6">
                 Unlock Web Insights with Tri-AI
               </h2>
@@ -40,7 +40,7 @@ export default function LandingPage() {
               </p>
               <Button asChild size="lg" className="font-semibold text-lg py-3 px-6 sm:py-4 sm:px-8 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
                 <Link href="/processor" className="flex items-center">
-                  <span className="flex items-center"> {/* Ensured single child for Link */}
+                  <span className="flex items-center">
                     Get Started <ExternalLink className="ml-2 h-5 w-5" />
                   </span>
                 </Link>
@@ -55,13 +55,13 @@ export default function LandingPage() {
             <h3 className="text-3xl sm:text-4xl font-bold font-display text-center text-primary mb-12 sm:mb-16">
               How Tri-AI Works
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-8 lg:gap-12">
-              <Card className="card-hover bg-card/80 backdrop-blur-md border-border/50 shadow-xl hover:shadow-2xl transition-shadow duration-300 rounded-xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-10 lg:gap-12">
+              <Card className="card-glow-hover bg-card border-border/50 shadow-lg">
                 <CardHeader className="items-center text-center">
                   <div className="p-3 sm:p-4 bg-primary/10 rounded-full mb-3 sm:mb-4">
-                    <Zap className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
+                    <Zap className="h-8 w-8 sm:h-10 sm:w-10 text-[var(--scraper-accent)]" style={{ filter: 'drop-shadow(0 0 5px var(--scraper-accent))' }} />
                   </div>
-                  <CardTitle className="font-display text-xl sm:text-2xl text-primary">1. Scrape Content</CardTitle>
+                  <CardTitle className="font-display text-xl sm:text-2xl text-[var(--scraper-accent)]" style={{textShadow: '0 0 8px hsla(var(--scraper-accent), 0.7)'}}>1. Scrape Content</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-center text-card-foreground/80 text-sm sm:text-base">
@@ -69,12 +69,12 @@ export default function LandingPage() {
                   </CardDescription>
                 </CardContent>
               </Card>
-              <Card className="card-hover bg-card/80 backdrop-blur-md border-border/50 shadow-xl hover:shadow-2xl transition-shadow duration-300 rounded-xl">
+              <Card className="card-glow-hover bg-card border-border/50 shadow-lg">
                 <CardHeader className="items-center text-center">
                   <div className="p-3 sm:p-4 bg-primary/10 rounded-full mb-3 sm:mb-4">
-                    <CircleCheckBig className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
+                    <CircleCheckBig className="h-8 w-8 sm:h-10 sm:w-10 text-[var(--validator-accent)]" style={{ filter: 'drop-shadow(0 0 5px var(--validator-accent))' }} />
                   </div>
-                  <CardTitle className="font-display text-xl sm:text-2xl text-primary">2. Validate Information</CardTitle>
+                  <CardTitle className="font-display text-xl sm:text-2xl text-[var(--validator-accent)]" style={{textShadow: '0 0 8px hsla(var(--validator-accent), 0.7)'}}>2. Validate Information</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-center text-card-foreground/80 text-sm sm:text-base">
@@ -82,12 +82,12 @@ export default function LandingPage() {
                   </CardDescription>
                 </CardContent>
               </Card>
-              <Card className="card-hover bg-card/80 backdrop-blur-md border-border/50 shadow-xl hover:shadow-2xl transition-shadow duration-300 rounded-xl">
+              <Card className="card-glow-hover bg-card border-border/50 shadow-lg">
                 <CardHeader className="items-center text-center">
                   <div className="p-3 sm:p-4 bg-primary/10 rounded-full mb-3 sm:mb-4">
-                    <ChartNoAxesColumnIncreasing className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
+                    <ChartNoAxesColumnIncreasing className="h-8 w-8 sm:h-10 sm:w-10 text-[var(--enhancer-accent-gold)]" style={{ filter: 'drop-shadow(0 0 5px var(--enhancer-accent-gold))' }}/>
                   </div>
-                  <CardTitle className="font-display text-xl sm:text-2xl text-primary">3. Enhance & Refine</CardTitle>
+                  <CardTitle className="font-display text-xl sm:text-2xl text-[var(--enhancer-accent-gold)]" style={{textShadow: '0 0 8px hsla(var(--enhancer-accent-gold), 0.7)'}}>3. Enhance & Refine</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-center text-card-foreground/80 text-sm sm:text-base">
@@ -100,7 +100,7 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="py-8 border-t border-border/30 bg-background/80 backdrop-blur-sm">
+      <footer className="py-8 border-t border-border/30 bg-background/80">
         <div className="container mx-auto px-4 sm:px-6 text-center text-foreground/60">
           <p className="text-sm sm:text-base">&copy; {new Date().getFullYear()} Tri-AI. All rights reserved.</p>
           <p className="text-xs sm:text-sm mt-1">Powered by Google Gemini.</p>

@@ -42,7 +42,7 @@ const renderScraperData = (data: ArticleScraperOutput) => (
       <h4 className="font-semibold text-primary mb-1 flex items-center">
         <MessageSquare className="mr-2 h-4 w-4" /> Summary
       </h4>
-      <ScrollArea className="h-28 rounded-md border bg-background p-2">
+      <ScrollArea className="h-28 rounded-md border bg-secondary p-2">
         <p className="text-foreground/90 whitespace-pre-wrap break-words">{data.summary || "Not found"}</p>
       </ScrollArea>
     </div>
@@ -51,7 +51,7 @@ const renderScraperData = (data: ArticleScraperOutput) => (
         <h4 className="font-semibold text-primary mb-1 flex items-center">
           <ListChecks className="mr-2 h-4 w-4" /> Key Takeaways
         </h4>
-        <ScrollArea className="h-28 rounded-md border bg-background p-2">
+        <ScrollArea className="h-28 rounded-md border bg-secondary p-2">
         <ul className="list-disc list-inside pl-2 space-y-1 text-foreground/90">
           {data.keyTakeaways.map((takeaway, index) => (
             <li key={index}>{takeaway}</li>
@@ -76,7 +76,7 @@ const renderValidatorData = (data: ValidateArticleDataOutput) => (
         <Check className="mr-2 h-4 w-4" /> Internal Consistency
       </h4>
       <p className="text-foreground/90 flex items-center">
-        {data.consistencyInternal ? <ThumbsUp className="mr-2 h-4 w-4 text-green-500" /> : <ThumbsDown className="mr-2 h-4 w-4 text-red-500" />}
+        {data.consistencyInternal ? <ThumbsUp className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" /> : <ThumbsDown className="mr-2 h-4 w-4 text-red-500 dark:text-red-400" />}
         {data.consistencyInternal ? "Appears internally consistent" : "Potential internal inconsistencies found"}
       </p>
     </div>
@@ -85,7 +85,7 @@ const renderValidatorData = (data: ValidateArticleDataOutput) => (
         <h4 className="font-semibold text-primary mb-1 flex items-center">
           <ListChecks className="mr-2 h-4 w-4" /> Potential Unsupported Claims
         </h4>
-        <ScrollArea className="h-32 rounded-md border bg-background p-2">
+        <ScrollArea className="h-32 rounded-md border bg-secondary p-2">
           <ul className="list-disc list-inside pl-2 space-y-1 text-foreground/90">
             {data.potentialUnsupportedClaims.map((claim, index) => (
               <li key={index}>{claim}</li>
@@ -106,7 +106,7 @@ const renderEnhancerData = (data: EnhanceContentOutput) => (
       <h4 className="font-semibold text-primary mb-1 flex items-center">
         <Sparkles className="mr-2 h-4 w-4" /> Enhanced Prose
       </h4>
-      <ScrollArea className="h-60 rounded-md border bg-background p-2">
+      <ScrollArea className="h-60 rounded-md border bg-secondary p-2">
         <p className="text-foreground/90 whitespace-pre-wrap break-words">{data.enhancedProse}</p>
       </ScrollArea>
     </div>
@@ -144,7 +144,7 @@ export function AgentResultCard({ agentName, icon, result }: AgentResultCardProp
     if (result.status === 'error' && result.error) {
       return (
         <Alert variant="destructive" className="mt-4">
-          <XCircle className="h-5 w-5" />
+          <XCircle className="h-5 w-5 animate-shake-gentle" />
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>{result.error}</AlertDescription>
         </Alert>
@@ -154,7 +154,7 @@ export function AgentResultCard({ agentName, icon, result }: AgentResultCardProp
       return (
         <>
           <Alert variant="default" className="mt-4 bg-primary/10 border-primary/30">
-            <CheckCircle2 className="h-5 w-5 text-primary" />
+            <CheckCircle2 className="h-5 w-5 text-primary animate-pulse-soft" />
             <AlertTitle className="text-primary">Success</AlertTitle>
             <AlertDescription className="text-primary/80">Data processed successfully.</AlertDescription>
           </Alert>
@@ -176,7 +176,7 @@ export function AgentResultCard({ agentName, icon, result }: AgentResultCardProp
   };
 
   return (
-    <Card className="shadow-md flex flex-col h-full">
+    <Card className="shadow-md flex flex-col h-full card-hover">
       <CardHeader>
         <div className="flex items-center space-x-3">
           <AgentIcon className="h-7 w-7 text-primary" />
@@ -190,4 +190,3 @@ export function AgentResultCard({ agentName, icon, result }: AgentResultCardProp
     </Card>
   );
 }
-

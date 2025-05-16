@@ -113,7 +113,7 @@ export function UrlProcessorPageClient() {
 
   return (
     <div className="space-y-10">
-      <Card className="shadow-lg border-border/70">
+      <Card className="shadow-lg border-border/70 card-hover">
         <CardHeader>
           <CardTitle className="text-xl">Process Article URL</CardTitle>
           <CardDescription>Enter an article URL to extract, validate its content, and enhance information using AI agents.</CardDescription>
@@ -160,7 +160,7 @@ export function UrlProcessorPageClient() {
         </div>
       )}
       {!showResults && !isProcessing && (
-         <Card className="shadow-lg">
+         <Card className="shadow-lg card-hover">
             <CardContent className="pt-6">
               <p className="text-center text-muted-foreground">Enter an article URL above and click "Process Article URL" to see the AI agents in action.</p>
             </CardContent>

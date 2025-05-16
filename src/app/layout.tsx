@@ -12,16 +12,6 @@ const playfairDisplay = Playfair_Display({
   display: 'swap',
 });
 
-// const geistSans = GeistSans({ // Removed due to missing package
-//   variable: '--font-geist-sans',
-//   subsets: ['latin'],
-// });
-
-// const geistMono = GeistMono({ // Removed due to missing package
-//   variable: '--font-geist-mono',
-//   subsets: ['latin'],
-// });
-
 export const metadata: Metadata = {
   title: 'Tri-AI',
   description: 'AI-powered multi-agent information processing system using Gemini.',

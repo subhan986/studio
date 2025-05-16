@@ -5,99 +5,98 @@
 
 @layer base {
   :root {
-    /* Light Theme based on PRD */
-    --background: 220 13% 95%; /* #F0F2F5 - Light Grey */
-    --foreground: 240 10% 3.9%; /* Dark Grey for text */
+    /* Light Theme (Inspired by the "Sign up" screen) */
+    --background: 0 0% 100%; /* White for main content background (cards, headers) */
+    --foreground: 222.2 84% 4.9%; /* Dark Blue/Black for text */
 
     --card: 0 0% 100%; /* White */
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 231 48% 48%; /* #3F51B5 - Deep Saturated Blue */
-    --primary-foreground: 0 0% 98%; /* White text on primary */
+    --primary: 262.1 83.3% 57.8%; /* Purple for links and primary actions */
+    --primary-foreground: 0 0% 100%; /* White text on primary */
 
-    --secondary: 240 4.8% 95.9%; /* Very light gray for secondary elements */
-    --secondary-foreground: 240 5.9% 10%; /* Dark gray text on secondary */
+    --secondary: 210 40% 96.1%; /* Light gray for secondary elements */
+    --secondary-foreground: 222.2 47.4% 11.2%; /* Dark gray text on secondary */
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%; /* Medium gray for muted text */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%; /* Medium gray for muted text */
 
-    --accent: 36 100% 50%; /* #FF9800 - Vibrant Orange */
-    --accent-foreground: 240 10% 3.9%; /* Dark text on accent for light mode */
+    --accent: 262.1 83.3% 57.8%; /* Purple */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 5.9% 90%; /* Light gray border */
-    --input: 240 5.9% 90%; /* Light gray input background */
-    --ring: 231 48% 48%; /* Blue for focus rings */
+    --border: 214.3 31.8% 91.4%; /* Light gray border */
+    --input: 214.3 31.8% 91.4%; /* Light gray input background */
+    --ring: 262.1 83.3% 57.8%; /* Purple for focus rings */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Slightly more rounded */
 
     /* Chart colors for light theme */
-    --chart-1: 231 48% 50%;
-    --chart-2: 145 60% 45%; /* Green for charts */
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --chart-1: 262.1 83.3% 57.8%; /* Purple */
+    --chart-2: 193.2 98.2% 40.2%; /* Teal/Blue from gradient */
+    --chart-3: 36.2 98.2% 50.2%;  /* Orange from gradient */
+    --chart-4: 330 80% 60%; /* Pink from gradient */
+    --chart-5: 240 70% 65%; /* Indigo */
 
-    --sidebar-background: 0 0% 100%; /* Light Sidebar */
-    --sidebar-foreground: 240 10% 3.9%;
-    --sidebar-primary: 231 48% 48%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222.2 84% 4.9%;
+    --sidebar-primary: 262.1 83.3% 57.8%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 92%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 240 5.9% 88%;
-    --sidebar-ring: 231 48% 48%;
+    --sidebar-accent: 210 40% 96.1%;
+    --sidebar-accent-foreground: 222.2 47.4% 11.2%;
+    --sidebar-border: 214.3 31.8% 91.4%;
+    --sidebar-ring: 262.1 83.3% 57.8%;
   }
 
   .dark {
-    /* Dark Theme with Colorful Glow */
-    --background: 0 0% 10%; /* Very dark gray, almost black */
-    --foreground: 240 5% 95%; /* Off-white */
+    --background: 222.2 84% 4.9%; /* Dark Blue/Black */
+    --foreground: 210 40% 98%; /* Light Gray/White for text */
 
-    --card: 0 0% 14%; /* Slightly lighter dark gray for cards */
-    --card-foreground: 240 5% 95%;
+    --card: 222.2 47.4% 11.2%; /* Darker card background */
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 14%;
-    --popover-foreground: 240 5% 95%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 231 60% 65%; /* Lighter, more vibrant blue for dark mode */
-    --primary-foreground: 0 0% 98%; /* White text on primary */
+    --primary: 262.1 83.3% 67.8%; /* Lighter Purple for dark mode */
+    --primary-foreground: 0 0% 98%; 
 
-    --secondary: 0 0% 18%; /* Another shade of dark gray */
-    --secondary-foreground: 240 5% 95%;
+    --secondary: 217.2 32.6% 17.5%; /* Dark gray for secondary elements */
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 0 0% 18%;
-    --muted-foreground: 240 5% 65%; /* Lighter gray for muted text */
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%; /* Lighter gray for muted text */
 
-    --accent: 36 100% 60%; /* #FF9800 - Vibrant Orange (Dark Mode variant) */
-    --accent-foreground: 0 0% 98%; /* White text on accent for dark mode */
+    --accent: 262.1 83.3% 67.8%; /* Lighter Purple */
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 70% 50%; /* #B32424 */
+    --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 20%; /* Darker gray border */
-    --input: 0 0% 20%; /* Darker gray input background */
-    --ring: 231 60% 65%; /* Lighter blue for focus rings (Dark Mode variant) */
-
+    --border: 217.2 32.6% 17.5%; /* Darker gray border */
+    --input: 217.2 32.6% 17.5%; /* Darker gray input background */
+    --ring: 262.1 83.3% 67.8%; /* Lighter Purple for focus rings */
+    
     /* Chart colors for dark theme */
-    --chart-1: 231 60% 65%; /* Updated to lighter blue */
-    --chart-2: 145 60% 50%;
-    --chart-3: 35 85% 60%;
-    --chart-4: 275 70% 65%;
-    --chart-5: 335 80% 60%;
+    --chart-1: 262.1 83.3% 67.8%; 
+    --chart-2: 193.2 98.2% 50.2%; 
+    --chart-3: 36.2 98.2% 60.2%;  
+    --chart-4: 330 80% 70%; 
+    --chart-5: 240 70% 75%;
 
-    --sidebar-background: 0 0% 8%; /* Dark Sidebar */
-    --sidebar-foreground: 240 5% 90%;
-    --sidebar-primary: 231 60% 62%; /* Updated to lighter blue variant */
+    --sidebar-background: 222.2 84% 4.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 262.1 83.3% 67.8%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 16%;
-    --sidebar-accent-foreground: 240 5% 90%;
-    --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 231 60% 62%; /* Updated to lighter blue variant */
+    --sidebar-accent: 217.2 32.6% 17.5%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-ring: 262.1 83.3% 67.8%;
   }
 }
 
@@ -106,68 +105,52 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-playfair-display), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    @apply text-foreground; /* Default text color */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6e45e2, #88d3ce, #fd6c6c, #f5af19, #f12711); /* Orange, Red, Teal, Purple */
+    background-size: 400% 400%;
+    animation: gradientBG 25s ease infinite;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-playfair-display), serif;
   }
 }
 
-/* Enhanced card hover for glow effect (Dark mode specific) */
-.dark .card-hover:hover {
-  @apply shadow-[0_0_20px_5px_hsl(var(--primary)/0.3),_0_0_30px_10px_hsl(var(--accent)/0.2)];
-  transform: translateY(-2px);
-  transition-property: transform, box-shadow;
-  transition-duration: 0.3s;
-  transition-timing-function: ease-in-out;
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
-/* Standard card hover for light mode */
+
+/* Simpler card hover effect */
 .card-hover:hover {
-    @apply shadow-xl;
+    @apply shadow-xl; /* Using Tailwind's default shadow for simplicity */
     transform: translateY(-2px);
     transition-property: transform, box-shadow;
     transition-duration: 0.3s;
     transition-timing-function: ease-in-out;
 }
 
-
-/* Ensure headers maintain good contrast */
 .sticky-header {
-  @apply sticky top-0 z-50 w-full border-b border-border/40 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/60;
+  @apply sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60;
 }
 
-/* Animations for "emotions" on icons */
-@keyframes pulse-soft {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
+/* Removed playful-tilt, pulse-soft, shake-gentle animations */
+/* Retain accordion animations if needed */
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
 }
 
-@keyframes shake-gentle {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-2px) rotate(-1deg); }
-  50% { transform: translateX(2px) rotate(1deg); }
-  75% { transform: translateX(-1px) rotate(-0.5deg); }
-  100% { transform: translateX(0) rotate(0deg); }
-}
-
-@keyframes playful-tilt {
-  0% { transform: rotate(-3deg) translateY(0px); }
-  50% { transform: rotate(3deg) translateY(-3px); }
-  100% { transform: rotate(-3deg) translateY(0px); }
-}
-
-.animate-pulse-soft {
-  animation: pulse-soft 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
-}
-
-.animate-shake-gentle {
-  animation: shake-gentle 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
-
-.animate-playful-tilt {
-  animation: playful-tilt 3s infinite ease-in-out;
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
 }

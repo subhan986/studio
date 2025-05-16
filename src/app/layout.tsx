@@ -1,20 +1,28 @@
 import type {Metadata} from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Playfair_Display } from 'next/font/google';
+// import { GeistSans } from 'geist/font/sans'; // Removed due to missing package
+// import { GeistMono } from 'geist/font/mono'; // Removed due to missing package
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
+  variable: '--font-playfair-display',
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+// const geistSans = GeistSans({ // Removed due to missing package
+//   variable: '--font-geist-sans',
+//   subsets: ['latin'],
+// });
+
+// const geistMono = GeistMono({ // Removed due to missing package
+//   variable: '--font-geist-mono',
+//   subsets: ['latin'],
+// });
 
 export const metadata: Metadata = {
-  title: 'Tri-Agent Insights',
+  title: 'Tri-AI',
   description: 'AI-powered multi-agent information processing system using Gemini.',
 };
 
@@ -24,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${playfairDisplay.variable} antialiased`}>
         {children}
         <Toaster />
       </body>

@@ -64,7 +64,7 @@
     --popover: 0 0% 14%;
     --popover-foreground: 240 5% 95%;
 
-    --primary: 231 48% 55%; /* #3F51B5 - Deep Saturated Blue (Dark Mode variant) */
+    --primary: 231 60% 65%; /* Lighter, more vibrant blue for dark mode */
     --primary-foreground: 0 0% 98%; /* White text on primary */
 
     --secondary: 0 0% 18%; /* Another shade of dark gray */
@@ -81,10 +81,10 @@
 
     --border: 0 0% 20%; /* Darker gray border */
     --input: 0 0% 20%; /* Darker gray input background */
-    --ring: 231 48% 55%; /* Blue for focus rings (Dark Mode variant) */
+    --ring: 231 60% 65%; /* Lighter blue for focus rings (Dark Mode variant) */
 
     /* Chart colors for dark theme */
-    --chart-1: 231 48% 55%;
+    --chart-1: 231 60% 65%; /* Updated to lighter blue */
     --chart-2: 145 60% 50%;
     --chart-3: 35 85% 60%;
     --chart-4: 275 70% 65%;
@@ -92,12 +92,12 @@
 
     --sidebar-background: 0 0% 8%; /* Dark Sidebar */
     --sidebar-foreground: 240 5% 90%;
-    --sidebar-primary: 231 48% 52%;
+    --sidebar-primary: 231 60% 62%; /* Updated to lighter blue variant */
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 0 0% 16%;
     --sidebar-accent-foreground: 240 5% 90%;
     --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 231 48% 52%;
+    --sidebar-ring: 231 60% 62%; /* Updated to lighter blue variant */
   }
 }
 
@@ -161,3 +161,4 @@
 .animate-shake-gentle {
   animation: shake-gentle 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
+

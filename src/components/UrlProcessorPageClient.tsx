@@ -18,14 +18,13 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { processUrlAction, ProcessUrlActionResponse } from '@/app/actions/processUrlAction';
 import { useToast } from "@/hooks/use-toast";
-import { AgentResultCard, AgentResultData, AgentName as AgentCardName } from '@/components/AgentResultCard'; // Renamed AgentName to AgentCardName
+import { AgentResultCard, AgentResultData } from '@/components/AgentResultCard'; 
 import { Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
   url: z.string().url({ message: "Please enter a valid URL." }).min(1, { message: "URL cannot be empty." }),
 });
 
-// This type is for the internal state management of results
 export type LocalAgentName = 'scraper' | 'validator' | 'enhancer';
 
 const initialAgentState: AgentResultData = {
@@ -113,8 +112,8 @@ export function UrlProcessorPageClient() {
   const showResults = results.scraper.status !== 'idle' || results.validator.status !== 'idle' || results.enhancer.status !== 'idle' || isProcessing;
 
   return (
-    <div className="space-y-8">
-      <Card className="shadow-lg">
+    <div className="space-y-10">
+      <Card className="shadow-lg border-border/70">
         <CardHeader>
           <CardTitle className="text-xl">Process Article URL</CardTitle>
           <CardDescription>Enter an article URL to extract, validate its content, and enhance information using AI agents.</CardDescription>
@@ -151,8 +150,8 @@ export function UrlProcessorPageClient() {
       </Card>
 
       {showResults && (
-        <div className="space-y-6">
-            <h2 className="text-2xl font-semibold tracking-tight">Processing Results</h2>
+        <div className="space-y-8">
+            <h2 className="text-3xl font-semibold tracking-tight text-foreground/90 mb-2">Processing Results</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <AgentResultCard agentName="Article Scraper" icon="SearchCode" result={results.scraper} />
                 <AgentResultCard agentName="Article Validator" icon="ShieldCheck" result={results.validator} />

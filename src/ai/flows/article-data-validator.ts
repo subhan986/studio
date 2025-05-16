@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -35,7 +36,7 @@ const validateArticleDataPrompt = ai.definePrompt({
   input: {schema: ValidateArticleDataInputSchema},
   output: {schema: ValidateArticleDataOutputSchema},
   prompt: `You are an AI assistant that assesses the apparent reliability and internal consistency of information presented in an article summary and its key takeaways.
-You are NOT performing external fact-checking. Your assessment is based SOLELY on the provided text.
+You are NOT performing external fact-checking. Your assessment is based SOLELY on the provided text. Your output for text fields should be in natural, clear English.
 
 Article Title: {{{articleTitle}}}
 Article Summary: {{{articleSummary}}}
@@ -53,10 +54,8 @@ Full Article Text (for context, use sparingly if very long, focus on summary and
 Instructions:
 1. Read the article summary and key takeaways (and full text if provided and relevant).
 2. Assess if the main points seem internally consistent with each other and with the summary. Set 'consistencyInternal' (true/false).
-3. Identify any specific statements or claims within the summary or takeaways that seem inadequately supported by the details presented in the provided text itself, or that might generally warrant external verification. List these under 'potentialUnsupportedClaims'. If none, provide an empty array.
-4. Provide an 'overallAssessment' of the information's apparent reliability based *only* on the provided text. Examples: "Appears well-supported by details in text", "Contains claims needing external verification", "Lacks sufficient detail for assessment", "Generally coherent and internally consistent".
-
-Output format: JSON
+3. Identify any specific statements or claims within the summary or takeaways that seem inadequately supported by the details presented in the provided text itself, or that might generally warrant external verification. List these under 'potentialUnsupportedClaims'. If none, provide an empty array. Ensure claims are phrased in natural English.
+4. Provide an 'overallAssessment' of the information's apparent reliability based *only* on the provided text. Examples: "Appears well-supported by details in text", "Contains claims needing external verification", "Lacks sufficient detail for assessment", "Generally coherent and internally consistent". Ensure this assessment is in natural English.
 `,
   config: {
     safetySettings: [
@@ -91,3 +90,4 @@ const validateArticleDataFlow = ai.defineFlow(
     return output!;
   }
 );
+

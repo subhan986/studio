@@ -1,13 +1,13 @@
 "use server";
 
-import { smartScraper, SmartScraperOutput } from '@/ai/flows/smart-scraper';
-import { validateCompanyData, ValidateCompanyDataInput, ValidateCompanyDataOutput } from '@/ai/flows/ai-data-validator';
+import { articleScraper, ArticleScraperOutput, ArticleScraperInput } from '@/ai/flows/article-scraper';
+import { validateArticleData, ValidateArticleDataInput, ValidateArticleDataOutput } from '@/ai/flows/article-data-validator';
 import { enhanceContent, EnhanceContentInput, EnhanceContentOutput } from '@/ai/flows/gemini-content-enhancer';
 
 export interface ProcessUrlActionResponse {
-  scraperData?: SmartScraperOutput;
+  scraperData?: ArticleScraperOutput;
   scraperError?: string;
-  validatorData?: ValidateCompanyDataOutput;
+  validatorData?: ValidateArticleDataOutput;
   validatorError?: string;
   enhancerData?: EnhanceContentOutput;
   enhancerError?: string;
@@ -16,64 +16,64 @@ export interface ProcessUrlActionResponse {
 export async function processUrlAction(url: string): Promise<ProcessUrlActionResponse> {
   const response: ProcessUrlActionResponse = {};
 
-  // Agent 1: Scraper
-  let scraperOutput: SmartScraperOutput | undefined;
+  // Agent 1: Article Scraper
+  let scraperOutput: ArticleScraperOutput | undefined;
   try {
-    scraperOutput = await smartScraper({ url });
+    const scraperInput: ArticleScraperInput = { url };
+    scraperOutput = await articleScraper(scraperInput);
     response.scraperData = scraperOutput;
   } catch (error: any) {
     console.error("Scraper Agent Error:", error);
-    response.scraperError = error.message || "Failed to scrape content.";
+    response.scraperError = error.message || "Failed to scrape content from URL.";
     // Optionally, stop processing if scraper fails critically
     // return response; 
   }
 
-  // Agent 2: Validator
-  // Proceed even if scraper had issues, to show validator might report errors about missing input
-  if (scraperOutput) { // Only run if scraper produced some output
+  // Agent 2: Article Validator
+  if (scraperOutput) {
     try {
-      const validatorInput: ValidateCompanyDataInput = {
-        companyName: scraperOutput.productName || "N/A",
-        sourceText: scraperOutput.description || "No description scraped.",
-        // newsArticleText, foundingDateOfficial, ceoOfficial are optional and not available from a generic URL input
+      const validatorInput: ValidateArticleDataInput = {
+        articleTitle: scraperOutput.title,
+        articleSummary: scraperOutput.summary,
+        keyTakeaways: scraperOutput.keyTakeaways,
+        fullArticleText: scraperOutput.fullText,
       };
-      const validatorOutput = await validateCompanyData(validatorInput);
+      const validatorOutput = await validateArticleData(validatorInput);
       response.validatorData = validatorOutput;
     } catch (error: any) {
       console.error("Validator Agent Error:", error);
-      response.validatorError = error.message || "Failed to validate content.";
+      response.validatorError = error.message || "Failed to validate article content.";
     }
   } else {
      response.validatorError = "Skipped due to scraper failure or no data.";
   }
 
 
-  // Agent 3: Enhancer
-  // Proceed based on scraper output and validator results
-  if (scraperOutput) { // Only run if scraper produced some output
+  // Agent 3: Content Enhancer
+  if (scraperOutput) {
     try {
-      const facts: string[] = [];
-      if (scraperOutput.keySpecs) facts.push(`Key Specifications: ${scraperOutput.keySpecs}`);
-      
+      const pointsToElaborate: string[] = [];
+      if (scraperOutput.keyTakeaways && scraperOutput.keyTakeaways.length > 0) {
+        pointsToElaborate.push(...scraperOutput.keyTakeaways.map(kt => `Key takeaway: ${kt}`));
+      } else if (scraperOutput.summary) {
+         pointsToElaborate.push(`Article Summary: ${scraperOutput.summary}`);
+      }
+
       if (response.validatorData) {
-        if (response.validatorData.inconsistencies && response.validatorData.inconsistencies.length > 0) {
-          facts.push(`Validation Inconsistencies: ${response.validatorData.inconsistencies.join('; ')}`);
-        } else {
-          facts.push("Validation: Data appears consistent based on available checks.");
+        pointsToElaborate.push(`Validator Assessment: ${response.validatorData.overallAssessment}`);
+        if (response.validatorData.potentialUnsupportedClaims && response.validatorData.potentialUnsupportedClaims.length > 0) {
+          pointsToElaborate.push(`Potential Unsupported Claims from Article: ${response.validatorData.potentialUnsupportedClaims.join('; ')}`);
         }
-        if (response.validatorData.foundingDateConsistent === false) facts.push("Note: Founding date information might be inconsistent or unverified.");
-        if (response.validatorData.ceoConsistent === false) facts.push("Note: CEO information might be inconsistent or unverified.");
+        pointsToElaborate.push(`Internal Consistency of Article: ${response.validatorData.consistencyInternal ? 'Appears consistent' : 'May have inconsistencies'}`);
       } else if (response.validatorError) {
-        facts.push(`Validation Status: Error - ${response.validatorError}`);
-      } else {
-        facts.push("Validation: Status unknown or skipped.");
+        pointsToElaborate.push(`Article Validation Status: Error - ${response.validatorError}`);
       }
 
 
       const enhancerInput: EnhanceContentInput = {
-        validatedFacts: facts.length > 0 ? facts : ["No specific facts extracted or validated."],
-        sourceText: scraperOutput.description || "No source description available for enhancement context.",
-        organizeChronologically: false, // Default as per PRD for general cases
+        pointsToElaborate: pointsToElaborate.length > 0 ? pointsToElaborate : ["No specific points identified from article for elaboration."],
+        contextualText: scraperOutput.fullText || scraperOutput.summary || "No source text available for enhancement context.",
+        organizeChronologically: false, 
       };
       const enhancerOutput = await enhanceContent(enhancerInput);
       response.enhancerData = enhancerOutput;

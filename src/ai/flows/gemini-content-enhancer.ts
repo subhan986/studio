@@ -1,7 +1,7 @@
 // src/ai/flows/gemini-content-enhancer.ts
 'use server';
 /**
- * @fileOverview An AI agent that enhances validated content by summarizing context and organizing information.
+ * @fileOverview An AI agent that enhances content by elaborating on points and organizing information.
  *
  * - enhanceContent - A function that handles the content enhancement process.
  * - EnhanceContentInput - The input type for the enhanceContent function.
@@ -9,13 +9,13 @@
  */
 
 import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import {z}from 'genkit';
 
 const EnhanceContentInputSchema = z.object({
-  validatedFacts: z
+  pointsToElaborate: z
     .array(z.string())
-    .describe('An array of validated facts to enhance.'),
-  sourceText: z.string().describe('The original source text for context.'),
+    .describe('An array of key points, facts, or statements to enhance and elaborate upon.'),
+  contextualText: z.string().describe('The original text (e.g., article summary or body) providing context.'),
   organizeChronologically: z
     .boolean()
     .optional()
@@ -41,22 +41,22 @@ const prompt = ai.definePrompt({
   name: 'enhanceContentPrompt',
   input: {schema: EnhanceContentInputSchema},
   output: {schema: EnhanceContentOutputSchema},
-  prompt: `You are an expert content enhancer, specializing in creating detailed and accurate outlines for educational articles or videos.
+  prompt: `You are an expert content enhancer, specializing in creating detailed and accurate outlines or expanded content.
 
-You will receive a list of validated facts and the original source text.
+You will receive a list of points to elaborate upon and contextual text.
 Your goal is to:
-1. Add context to each fact by summarizing relevant surrounding text from the original source.
-2. Synthesize information from multiple facts into a coherent description.
-3. Rephrase awkward or technically-worded text segments into clearer, more readable language.
-4. Standardize formatting for dates, numbers, currency, and other data types.
+1. Add context to each point by drawing from the contextual text.
+2. Synthesize information related to these points into a coherent narrative or explanation.
+3. Rephrase any awkward or technically-worded segments into clearer, more readable language.
+4. Standardize formatting for dates, numbers, currency, and other data types if applicable.
 5. Organize the information {{{#if organizeChronologically}}chronologically{{else}}thematically{{/if}}}.
 
-Validated Facts:
-{{#each validatedFacts}}- {{{this}}}
+Points to Elaborate:
+{{#each pointsToElaborate}}- {{{this}}}
 {{/each}}
 
-Original Source Text:
-{{{sourceText}}}
+Contextual Text:
+{{{contextualText}}}
 
 Enhanced Content:
 `, // the AI will generate enhanced content here

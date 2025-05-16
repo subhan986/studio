@@ -80,7 +80,7 @@ export function UrlProcessorPageClient() {
       if (response.scraperError || response.validatorError || response.enhancerError) {
         toast({
           title: "Processing Error",
-          description: "One or more agents encountered an error.",
+          description: "One or more agents encountered an error. Check results for details.",
           variant: "destructive",
         });
       } else {
@@ -90,17 +90,18 @@ export function UrlProcessorPageClient() {
         });
       }
 
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to process URL:", error);
+      const errorMessage = error.message || "An unexpected error occurred. Please try again.";
       toast({
         title: "System Error",
-        description: "An unexpected error occurred. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
-      setResults({ // Reset to error state if action itself fails
-        scraper: { ...initialAgentState, status: 'error', error: 'System error' },
-        validator: { ...initialAgentState, status: 'error', error: 'System error' },
-        enhancer: { ...initialAgentState, status: 'error', error: 'System error' },
+      setResults({ 
+        scraper: { ...initialAgentState, status: 'error', error: `System error: ${errorMessage}` },
+        validator: { ...initialAgentState, status: 'error', error: `System error: ${errorMessage}` },
+        enhancer: { ...initialAgentState, status: 'error', error: `System error: ${errorMessage}` },
       });
     } finally {
       setIsProcessing(false);
@@ -113,8 +114,8 @@ export function UrlProcessorPageClient() {
     <div className="space-y-8">
       <Card className="shadow-lg">
         <CardHeader>
-          <CardTitle className="text-xl">Process URL</CardTitle>
-          <CardDescription>Enter a URL to extract, validate, and enhance information using AI agents.</CardDescription>
+          <CardTitle className="text-xl">Process Article URL</CardTitle>
+          <CardDescription>Enter an article URL to extract, validate its content, and enhance information using AI agents.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -124,9 +125,9 @@ export function UrlProcessorPageClient() {
                 name="url"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Website URL</FormLabel>
+                    <FormLabel>Article URL</FormLabel>
                     <FormControl>
-                      <Input placeholder="https://example.com/product-page" {...field} />
+                      <Input placeholder="https://example.com/article-page" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -139,7 +140,7 @@ export function UrlProcessorPageClient() {
                     Processing...
                   </>
                 ) : (
-                  "Process URL"
+                  "Process Article URL"
                 )}
               </Button>
             </form>
@@ -151,16 +152,16 @@ export function UrlProcessorPageClient() {
         <div className="space-y-6">
             <h2 className="text-2xl font-semibold tracking-tight">Processing Results</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <AgentResultCard agentName="Smart Scraper" icon="SearchCode" result={results.scraper} />
-                <AgentResultCard agentName="AI Validator" icon="ShieldCheck" result={results.validator} />
-                <AgentResultCard agentName="Gemini Enhancer" icon="Sparkles" result={results.enhancer} />
+                <AgentResultCard agentName="Article Scraper" icon="SearchCode" result={results.scraper} />
+                <AgentResultCard agentName="Article Validator" icon="ShieldCheck" result={results.validator} />
+                <AgentResultCard agentName="Content Enhancer" icon="Sparkles" result={results.enhancer} />
             </div>
         </div>
       )}
       {!showResults && !isProcessing && (
          <Card className="shadow-lg">
             <CardContent className="pt-6">
-              <p className="text-center text-muted-foreground">Enter a URL above and click "Process URL" to see the AI agents in action.</p>
+              <p className="text-center text-muted-foreground">Enter an article URL above and click "Process Article URL" to see the AI agents in action.</p>
             </CardContent>
          </Card>
       )}

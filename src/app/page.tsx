@@ -3,22 +3,21 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Brain, Zap, CheckCircle, BarChart, ExternalLink } from "lucide-react";
 import Link from 'next/link';
-import { ThemeToggle } from '@/components/ThemeToggle'; // Added ThemeToggle
+import { ThemeToggle } from '@/components/ThemeToggle'; 
+import Image from 'next/image';
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="sticky-header"> {/* Updated class */}
+    <div className="flex flex-col min-h-screen bg-background">
+      <header className="sticky-header">
         <div className="container flex h-20 items-center justify-between">
           <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
             <Brain className="h-10 w-10 text-primary" />
             <h1 className="text-3xl font-bold font-display text-primary">Tri-AI</h1>
           </Link>
           <nav className="flex items-center space-x-2">
-            <Button variant="ghost" asChild>
-              <Link href="/processor">Go to Processor</Link>
-            </Button>
-            <ThemeToggle /> {/* Added ThemeToggle */}
+            {/* "Go to Processor" button removed from here */}
+            <ThemeToggle /> 
           </nav>
         </div>
       </header>

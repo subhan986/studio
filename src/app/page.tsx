@@ -1,38 +1,37 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ExternalLink, Zap } from "lucide-react";
+import { ExternalLink, Zap, CircleCheckBig, ChartNoAxesColumnIncreasing } from "lucide-react";
 import Link from 'next/link';
-import Image from 'next/image'; // Added for image logo
-import { CircleCheckBig, ChartNoAxesColumnIncreasing } from 'lucide-react';
+import Image from 'next/image';
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen"> 
-      <header className="sticky-header"> 
+    <div className="flex flex-col min-h-screen bg-background">
+      <header className="sticky-header bg-background/90 backdrop-blur-sm">
         <div className="container flex h-16 sm:h-20 items-center">
-          <Link href="/" className="flex items-center"> {/* Removed space-x as image is the main content */}
+          <Link href="/" className="flex h-full items-center"> {/* Modified: Added h-full */}
             <Image
-              src="https://placehold.co/120x40.png"
+              src="https://images.unsplash.com/photo-1617791160536-598cf32026fb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxicmFpbnxlbnwwfHx8fDE3NDc0MTgzMjN8MA&ixlib=rb-4.1.0&q=80&w=1080"
               alt="Tri-AI Logo"
               width={120}
               height={40}
-              className="h-10 w-auto" // Adjust height as needed, width will scale
-              data-ai-hint="logo brand"
-              priority // For LCP on landing page
+              className="h-full w-auto object-contain" // Modified: Image takes full height of Link, width auto, object-contain
+              data-ai-hint="brain logo"
+              priority
             />
           </Link>
           <nav className="flex items-center space-x-1 sm:space-x-2 ml-auto">
-            {/* ThemeToggle removed in UI reset */}
+            {/* ThemeToggle is managed by its own component if active */}
           </nav>
         </div>
       </header>
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="py-16 md:py-24 lg:py-32"> 
+        <section className="py-16 md:py-24 lg:py-32">
           <div className="container mx-auto px-4 sm:px-6 text-center">
-            <Card className="max-w-3xl mx-auto p-6 sm:p-10 shadow-lg bg-card">
+            <Card className="max-w-3xl mx-auto p-6 sm:p-10 shadow-xl bg-card/80 backdrop-blur-md rounded-xl">
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-primary mb-6">
                 Unlock Web Insights with Tri-AI
               </h2>
@@ -51,13 +50,13 @@ export default function LandingPage() {
         </section>
 
         {/* How It Works Section */}
-        <section className="py-16 md:py-24"> 
+        <section className="py-16 md:py-24">
           <div className="container mx-auto px-4 sm:px-6">
             <h3 className="text-3xl sm:text-4xl font-bold font-display text-center text-primary mb-12 sm:mb-16">
               How Tri-AI Works
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-8 lg:gap-12"> {/* Adjusted gap for responsiveness */}
-              <Card className="card-hover bg-card border-border/50 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-8 lg:gap-12">
+              <Card className="card-hover bg-card/80 backdrop-blur-md border-border/50 shadow-xl hover:shadow-2xl transition-shadow duration-300 rounded-xl">
                 <CardHeader className="items-center text-center">
                   <div className="p-3 sm:p-4 bg-primary/10 rounded-full mb-3 sm:mb-4">
                     <Zap className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
@@ -70,7 +69,7 @@ export default function LandingPage() {
                   </CardDescription>
                 </CardContent>
               </Card>
-              <Card className="card-hover bg-card border-border/50 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <Card className="card-hover bg-card/80 backdrop-blur-md border-border/50 shadow-xl hover:shadow-2xl transition-shadow duration-300 rounded-xl">
                 <CardHeader className="items-center text-center">
                   <div className="p-3 sm:p-4 bg-primary/10 rounded-full mb-3 sm:mb-4">
                     <CircleCheckBig className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
@@ -83,7 +82,7 @@ export default function LandingPage() {
                   </CardDescription>
                 </CardContent>
               </Card>
-              <Card className="card-hover bg-card border-border/50 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <Card className="card-hover bg-card/80 backdrop-blur-md border-border/50 shadow-xl hover:shadow-2xl transition-shadow duration-300 rounded-xl">
                 <CardHeader className="items-center text-center">
                   <div className="p-3 sm:p-4 bg-primary/10 rounded-full mb-3 sm:mb-4">
                     <ChartNoAxesColumnIncreasing className="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
@@ -101,7 +100,7 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="py-8 border-t border-border/30 bg-background/80"> 
+      <footer className="py-8 border-t border-border/30 bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 sm:px-6 text-center text-foreground/60">
           <p className="text-sm sm:text-base">&copy; {new Date().getFullYear()} Tri-AI. All rights reserved.</p>
           <p className="text-xs sm:text-sm mt-1">Powered by Google Gemini.</p>

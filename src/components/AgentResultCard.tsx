@@ -60,18 +60,6 @@ const renderScraperData = (data: ArticleScraperOutput) => (
         </ScrollArea>
       </div>
     )}
-     {data.fullText && (
-      <div>
-        <h4 className="font-semibold text-primary mb-1 flex items-center">
-            <FileText className="mr-2 h-4 w-4" /> Full Text Snippet
-        </h4>
-        <ScrollArea className="h-32 rounded-md border bg-background p-2">
-            <p className="text-foreground/90 whitespace-pre-wrap break-words">
-            {data.fullText.length > 500 ? data.fullText.substring(0, 500) + "..." : data.fullText}
-            </p>
-        </ScrollArea>
-      </div>
-    )}
   </div>
 );
 
@@ -202,3 +190,4 @@ export function AgentResultCard({ agentName, icon, result }: AgentResultCardProp
     </Card>
   );
 }
+

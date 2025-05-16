@@ -5,15 +5,15 @@
 
 @layer base {
   :root {
-    /* Light Purplish Pastel Theme */
-    --background: 270 60% 97%; /* Very light pastel purple / off-white with purple tint */
+    /* Light Purplish Pastel Theme - Refined for cleaner "white" */
+    --background: 0 0% 98%; /* Off-white, neutral */
     --foreground: 270 25% 35%; /* Muted dark grayish purple for text */
 
-    --card: 270 70% 99%; /* Almost white with a hint of purple for cards */
-    --card-foreground: 270 25% 30%; /* Muted dark grayish purple for card text */
+    --card: 0 0% 100%; /* Pure white for cards */
+    --card-foreground: 270 25% 25%; /* Darker grayish purple for card text (better contrast) */
 
-    --popover: 270 70% 99%;
-    --popover-foreground: 270 25% 30%;
+    --popover: 0 0% 100%; /* Pure white for popovers */
+    --popover-foreground: 270 25% 25%; /* Darker grayish purple for popover text */
 
     --primary: 275 55% 72%; /* Soft medium pastel purple */
     --primary-foreground: 270 20% 15%; /* Darker purple for text on primary */
@@ -21,7 +21,7 @@
     --secondary: 270 50% 92%; /* Lighter pastel purple */
     --secondary-foreground: 275 40% 45%; /* Muted purple for text on secondary */
 
-    --muted: 270 40% 94%; /* Very light muted purple */
+    --muted: 0 0% 94%; /* Lighter neutral gray for muted backgrounds */
     --muted-foreground: 270 20% 55%; /* Greyish purple for muted text */
 
     --accent: 290 65% 78%; /* Pastel pinkish-purple / lavender */
@@ -30,8 +30,8 @@
     --destructive: 350 70% 70%; /* Soft pastel red */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 270 50% 90%; /* Light pastel purple border */
-    --input: 270 50% 94%; /* Light pastel purple input background */
+    --border: 270 30% 88%; /* Lighter, more neutral pastel purple border */
+    --input: 0 0% 96%; /* Neutral light gray for input backgrounds */
     --ring: 275 55% 72%; /* Primary color for focus rings */
 
     --radius: 0.75rem; /* Slightly more rounded */
@@ -43,13 +43,13 @@
     --chart-4: 300 50% 75%; /* Pastel magenta/pink */
     --chart-5: 240 50% 82%; /* Pastel blueish-purple */
 
-    --sidebar-background: 270 60% 98%;
+    --sidebar-background: 0 0% 99%; /* Cleaner off-white for sidebar */
     --sidebar-foreground: 270 25% 35%;
     --sidebar-primary: 275 55% 72%;
     --sidebar-primary-foreground: 270 20% 15%;
     --sidebar-accent: 270 50% 92%;
     --sidebar-accent-foreground: 275 40% 45%;
-    --sidebar-border: 270 50% 90%;
+    --sidebar-border: 270 30% 90%;
     --sidebar-ring: 275 55% 72%;
   }
 
@@ -82,7 +82,7 @@
     --border: 270 20% 25%; /* Dark purple border */
     --input: 270 20% 20%; /* Dark purple input background */
     --ring: 275 65% 78%; /* Primary color for focus rings */
-    
+
     /* Chart colors for dark purplish pastel theme */
     --chart-1: 275 65% 78%;
     --chart-2: 290 70% 82%;
@@ -121,7 +121,7 @@
     bottom: 0;
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(135deg, 
+    background: linear-gradient(135deg,
       hsl(275, 70%, 85%), /* Soft Lilac */
       hsl(260, 80%, 90%), /* Light Lavender */
       hsl(280, 60%, 82%), /* Muted Orchid */
@@ -135,7 +135,7 @@
   }
 
   .dark body::before {
-    background: linear-gradient(135deg, 
+    background: linear-gradient(135deg,
       hsl(275, 40%, 25%), /* Deeper Soft Lilac */
       hsl(260, 50%, 30%), /* Deeper Light Lavender */
       hsl(280, 30%, 22%), /* Deeper Muted Orchid */
@@ -167,7 +167,7 @@
 
 /* Simpler card hover effect suitable for pastel theme */
 .card-hover:hover {
-    @apply shadow-xl; 
+    @apply shadow-xl;
     transform: translateY(-2px);
     transition-property: transform, box-shadow;
     transition-duration: 0.3s;

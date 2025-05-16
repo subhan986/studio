@@ -112,11 +112,11 @@ export function UrlProcessorPageClient() {
   const showResults = results.scraper.status !== 'idle' || results.validator.status !== 'idle' || results.enhancer.status !== 'idle' || isProcessing;
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8 sm:space-y-10">
       <Card className="shadow-lg border-border/70 card-hover">
         <CardHeader>
-          <CardTitle className="text-xl">Process Article URL</CardTitle>
-          <CardDescription>Enter an article URL to extract, validate its content, and enhance information using AI agents.</CardDescription>
+          <CardTitle className="text-lg sm:text-xl">Process Article URL</CardTitle>
+          <CardDescription className="text-sm sm:text-base">Enter an article URL to extract, validate its content, and enhance information using AI agents.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -150,9 +150,9 @@ export function UrlProcessorPageClient() {
       </Card>
 
       {showResults && (
-        <div className="space-y-8">
-            <h2 className="text-3xl font-semibold tracking-tight text-foreground/90 mb-2">Processing Results</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="space-y-6 sm:space-y-8">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground/90 mb-2">Processing Results</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <AgentResultCard agentName="Article Scraper" icon="SearchCode" result={results.scraper} />
                 <AgentResultCard agentName="Article Validator" icon="ShieldCheck" result={results.validator} />
                 <AgentResultCard agentName="Content Enhancer" icon="Sparkles" result={results.enhancer} />

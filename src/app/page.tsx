@@ -16,7 +16,7 @@ export default function LandingPage() {
               alt="Tri-AI Logo"
               width={150}
               height={50}
-              className="h-auto w-auto object-contain"
+              className="h-auto w-auto object-contain animate-playful-tilt"
               data-ai-hint="cosmic logo"
               priority
             />
@@ -29,7 +29,7 @@ export default function LandingPage() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="py-16 md:py-24 lg:py-32">
+        <section className="py-24 md:py-32 lg:py-40"> {/* Increased padding */}
           <div className="container mx-auto px-4 sm:px-6 text-center">
             <Card className="max-w-3xl mx-auto p-6 sm:p-10 shadow-lg bg-card card-glow-hover">
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display text-primary mb-6">

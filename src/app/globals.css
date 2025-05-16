@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -70,10 +71,21 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    /* @apply bg-background text-foreground; */ /* Replaced by animated gradient */
+    @apply text-foreground;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     min-height: 100vh;
     text-shadow: 0 0 5px hsla(var(--foreground), 0.3); /* Subtle global text glow */
+    
+    background: linear-gradient(300deg, 
+      hsl(var(--background)) 0%, 
+      hsl(var(--scraper-accent) / 0.3) 25%, 
+      hsl(var(--validator-accent) / 0.25) 50%, 
+      hsl(var(--enhancer-accent-base) / 0.3) 75%, 
+      hsl(var(--background)) 100%
+    );
+    background-size: 400% 400%;
+    animation: animatedCosmicBackground 45s ease infinite;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -93,7 +105,6 @@
 
 /* Agent-specific card styling */
 .agent-card[data-agent-type="scraper"] .agent-card-header {
-  /* border-left: 4px solid var(--scraper-accent); */
   box-shadow: -5px 0 15px -5px var(--scraper-accent);
 }
 .agent-card[data-agent-type="scraper"] .agent-icon {
@@ -106,7 +117,6 @@
 }
 
 .agent-card[data-agent-type="validator"] .agent-card-header {
-  /* border-left: 4px solid var(--validator-accent); */
   box-shadow: -5px 0 15px -5px var(--validator-accent);
 }
 .agent-card[data-agent-type="validator"] .agent-icon {
@@ -119,7 +129,6 @@
 }
 
 .agent-card[data-agent-type="enhancer"] .agent-card-header {
-  /* border-left: 4px solid var(--enhancer-accent-base); */
   box-shadow: -5px 0 15px -5px var(--enhancer-accent-base);
 }
 .agent-card[data-agent-type="enhancer"] .agent-icon {
@@ -127,14 +136,9 @@
   filter: drop-shadow(0 0 5px var(--enhancer-accent-base));
 }
 .agent-card[data-agent-type="enhancer"] .agent-title {
-  /* Example of using gold for title */
   color: var(--enhancer-accent-gold);
   text-shadow: 0 0 8px hsla(var(--enhancer-accent-gold), 0.7);
 }
-.agent-card[data-agent-type="enhancer"] .agent-card-header {
-   /* You could use a gradient border or background if desired for enhancer, more complex */
-}
-
 
 .sticky-header {
   @apply sticky top-0 z-50 w-full border-b border-border/40 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/75;
@@ -149,4 +153,20 @@
 @keyframes accordion-up {
   from { height: var(--radix-accordion-content-height); }
   to { height: 0px; }
+}
+
+@keyframes animatedCosmicBackground {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes playful-tilt {
+  0%, 100% { transform: rotate(0deg) translateY(0px); }
+  25% { transform: rotate(-8deg) translateY(-2px); }
+  75% { transform: rotate(8deg) translateY(-2px); }
+}
+
+.animate-playful-tilt {
+  animation: playful-tilt 3s ease-in-out infinite;
 }

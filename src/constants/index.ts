@@ -11,7 +11,6 @@ export const NAV_LINKS = [
   { href: '#projects', label: 'Projects' },
   { href: '#skills', label: 'Skills' },
   { href: '#contact', label: 'Contact' },
-  { href: '/generate-description', label: 'AI Generator', icon: BrainCircuit },
 ];
 
 export const PROJECTS_DATA: Project[] = [
@@ -137,3 +136,4 @@ export const SOCIAL_LINKS_DATA: SocialLink[] = [
     icon: Mail,
   },
 ];
+

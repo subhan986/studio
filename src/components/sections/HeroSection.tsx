@@ -10,7 +10,7 @@ export function HeroSection() {
       <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
         <div className="flex justify-center md:order-last">
           <Image
-            src="https://placehold.co/300x300.png"
+            src="https://images.unsplash.com/photo-1523878291631-87283277f717?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyMHx8c3RhdHVlfGVufDB8fHx8MTc0ODUxNDk1M3ww&ixlib=rb-4.1.0&q=80&w=1080"
             alt="Professional Headshot"
             width={300}
             height={300}
@@ -21,7 +21,7 @@ export function HeroSection() {
         </div>
         <div className="text-center md:text-left">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
-            Hello, I&apos;m <span className="text-primary">Your Name</span>
+            Hello, I&apos;m <span className="text-primary">M.Subhan</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-2">
             Passionate Full-Stack Developer | AI Enthusiast

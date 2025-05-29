@@ -1,10 +1,17 @@
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { SectionWrapper } from '@/components/shared/SectionWrapper';
 import Link from 'next/link';
-import { ArrowRight, Download } from 'lucide-react';
+import { ArrowRight, Download, BrainCircuit, Globe, Zap } from 'lucide-react';
 
 export function HeroSection() {
+  const floatingCardContent = [
+    { icon: BrainCircuit, text: "4+ Interdisciplinary Projects" },
+    { icon: Globe, text: "Built for Scientists, Writers & Everyone in Between" },
+    { icon: Zap, text: "Always Coding, Always Creating" },
+  ];
+
   return (
     <SectionWrapper id="about" className="bg-muted/30 dark:bg-muted/10">
       <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -23,11 +30,22 @@ export function HeroSection() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
             Hello, I&apos;m <span className="text-primary">M.Subhan</span>
           </h1>
-          <p className="text-xl text-muted-foreground mb-2">
-            Passionate Full-Stack Developer | AI Enthusiast
+          <div className="mb-6 space-y-2">
+            {floatingCardContent.map((item, index) => (
+              <div key={index} className="flex items-center justify-center md:justify-start text-lg text-muted-foreground">
+                <item.icon className="h-5 w-5 mr-2 text-accent" />
+                <span>{item.text}</span>
+              </div>
+            ))}
+          </div>
+          <p className="text-lg mb-3 leading-relaxed">
+            Hey! I’m Subhan — a curious mind at the intersection of code, science, and stories. I’m building interactive platforms that blend synthetic biology, 3D simulations, and AI into tools that are as cool as they are useful.
           </p>
           <p className="text-lg mb-6 leading-relaxed">
-            I specialize in creating modern, responsive web applications with a focus on user experience and cutting-edge technologies. With a strong foundation in both frontend and backend development, I enjoy bringing ideas to life and solving complex problems. My journey into AI has further fueled my passion for innovation.
+            When I’m not knee-deep in JavaScript or spinning up gene circuits, I’m probably dreaming up novels inspired by resistance, memory, and the magic of female friendship. I believe in using tech and narrative to challenge norms and shape the future.
+          </p>
+          <p className="text-lg mb-6 leading-relaxed font-medium">
+            Let’s build something unforgettable.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-md transition-transform hover:scale-105">

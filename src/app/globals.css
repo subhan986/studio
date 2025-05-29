@@ -4,33 +4,33 @@
 
 @layer base {
   :root {
-    --background: 0 0% 96.1%; /* Light Gray #F5F5F5 */
-    --foreground: 220 10% 15%; /* Darker Gray/Blue for text */
+    --background: 0 0% 98%; /* Almost White */
+    --foreground: 224 71% 10%; /* Dark Blue for text */
 
     --card: 0 0% 100%; /* White cards */
-    --card-foreground: 220 10% 15%;
+    --card-foreground: 224 71% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 10% 15%;
+    --popover-foreground: 224 71% 10%;
 
-    --primary: 231 48% 48%; /* Deep Blue #3F51B5 */
-    --primary-foreground: 0 0% 98%; /* White/Light Gray text on Deep Blue */
+    --primary: 198 80% 48%; /* Medium Blue */
+    --primary-foreground: 0 0% 98%; /* White text on primary */
 
-    --secondary: 0 0% 92%; /* Slightly darker gray for secondary elements */
-    --secondary-foreground: 220 10% 15%;
+    --secondary: 210 40% 94%; /* Light Grayish Blue */
+    --secondary-foreground: 224 71% 10%;
 
-    --muted: 0 0% 90%; /* Muted gray */
-    --muted-foreground: 220 5% 45%;
+    --muted: 210 40% 94%;
+    --muted-foreground: 215 20% 45%; /* Darker Muted Gray */
 
-    --accent: 174 100% 29.4%; /* Teal #009688 */
-    --accent-foreground: 0 0% 98%; /* White/Light Gray text on Teal */
+    --accent: 40 90% 55%; /* Bright Orange/Yellow */
+    --accent-foreground: 224 71% 4%; /* Dark text on accent for light theme */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 231 48% 48%; /* Deep Blue for rings */
+    --border: 210 40% 90%; /* Light Gray Border */
+    --input: 210 40% 90%;
+    --ring: 198 80% 48%; /* Primary color for rings */
 
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
@@ -41,33 +41,33 @@
   }
 
   .dark {
-    --background: 220 15% 12%; /* Dark Gray for background */
-    --foreground: 0 0% 96.1%; /* Light Gray text */
+    --background: 224 71% 4%; /* Very Dark Desaturated Blue */
+    --foreground: 210 40% 98%; /* Almost White Text */
 
-    --card: 220 15% 18%; /* Slightly lighter dark gray for cards */
-    --card-foreground: 0 0% 96.1%;
+    --card: 224 71% 9%; /* Slightly Lighter Dark Blue for Cards */
+    --card-foreground: 210 40% 98%;
 
-    --popover: 220 15% 18%;
-    --popover-foreground: 0 0% 96.1%;
+    --popover: 224 71% 9%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 231 48% 55%; /* Slightly lighter Deep Blue */
-    --primary-foreground: 231 50% 15%; /* Darker blue text on light blue */
+    --primary: 198 93% 60%; /* Vibrant Cyan/Blue */
+    --primary-foreground: 224 71% 4%; /* Dark text on primary */
 
-    --secondary: 220 15% 22%;
-    --secondary-foreground: 0 0% 96.1%;
+    --secondary: 215 28% 17%; /* Dark Grayish Blue */
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 220 15% 22%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted: 215 28% 17%;
+    --muted-foreground: 215 20% 65%; /* Lighter Gray for Muted Text */
 
-    --accent: 174 100% 39.4%; /* Slightly lighter Teal */
-    --accent-foreground: 174 100% 10%; /* Darker teal text on light teal */
+    --accent: 48 96% 59%; /* Bright Warm Orange/Yellow */
+    --accent-foreground: 224 71% 4%; /* Dark text on accent */
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62.8% 30.6%; /* Darker Red for destructive */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 15% 25%;
-    --input: 220 15% 25%;
-    --ring: 231 48% 55%; /* Lighter Deep Blue for rings */
+    --border: 215 28% 22%; /* Slightly Lighter Border for Dark Theme */
+    --input: 215 28% 22%;
+    --ring: 198 93% 60%; /* Primary color for rings */
     
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;

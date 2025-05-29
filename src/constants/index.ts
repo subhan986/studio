@@ -4,10 +4,10 @@ import {
   Linkedin, Github, Mail, Briefcase, Code, ServerCog, DatabaseZap, Wrench, 
   BrainCircuit, LayoutTemplate, Palette, TestTubeDiagonal, CloudCog, TerminalSquare, 
   GitFork, MessageSquare, Sigma, Move, Figma, ImageIcon, FlaskConical, Dna, FileText, Globe, Zap
-} from 'lucide-react'; // Assuming FigmaIcon was renamed to Figma
+} from 'lucide-react';
 
 export const NAV_LINKS = [
-  { href: '#about', label: 'About' },
+  { href: '#hero', label: 'About' }, // Changed from #about to #hero to match section id
   { href: '#projects', label: 'Projects' },
   { href: '#skills', label: 'Skills' },
   { href: '#contact', label: 'Contact' },
@@ -39,7 +39,7 @@ export const PROJECTS_DATA: Project[] = [
     id: 'saltsaffron',
     title: 'Salt & Saffron (Novel Project)',
     description: 'A dual-timeline historical fiction novel about memory, friendship, and resistance—set during the Salt March and in post-Y2K India.',
-    imageUrl: 'https://placehold.co/400x300.png', // salt-saffron-cover.png - using placeholder
+    imageUrl: 'https://images.unsplash.com/photo-1563267292-b787b0ae72bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxM3x8bm92ZWx8ZW58MHx8fHwxNzQ4NTE2MTA4fDA&ixlib=rb-4.1.0&q=80&w=1080',
     imageAiHint: 'book cover',
     tags: ['Scrivener', 'Google Docs', 'Canva', 'MidJourney'],
     // liveUrl: undefined, // Not Yet Published
@@ -49,7 +49,7 @@ export const PROJECTS_DATA: Project[] = [
     id: 'gravityplay',
     title: 'GravityPlay: Real Physics, Real Fun',
     description: 'A 3D gravity simulator built from scratch using Newton’s laws—visual, interactive, and super satisfying to watch.',
-    imageUrl: 'https://placehold.co/400x300.png', // gravityplay-thumbnail.png - using placeholder
+    imageUrl: 'https://placehold.co/600x450.png', // Using placeholder for now, will be updated if requested
     imageAiHint: 'physics simulation',
     tags: ['JavaScript', 'Three.js', 'Physics Engine'],
     liveUrl: 'https://gravityplay.space',
@@ -64,8 +64,8 @@ export const SKILLS_DATA: SkillCategory[] = [
     skills: [
       { id: 's1', name: 'HTML', icon: Code },
       { id: 's2', name: 'CSS', icon: Palette },
-      { id: 's3', name: 'JavaScript', icon: Code }, // Assuming Code icon for JS
-      { id: 's4', name: 'React', icon: LayoutTemplate }, // Using LayoutTemplate for React
+      { id: 's3', name: 'JavaScript', icon: Code }, 
+      { id: 's4', name: 'React', icon: LayoutTemplate }, 
       { id: 's5', name: 'Tailwind CSS', icon: Palette },
       { id: 's6', name: 'Framer Motion', icon: Move },
     ],
@@ -77,16 +77,16 @@ export const SKILLS_DATA: SkillCategory[] = [
       { id: 's7', name: 'Node.js', icon: ServerCog },
       { id: 's8', name: 'Express', icon: ServerCog }, 
       { id: 's9', name: 'MongoDB', icon: DatabaseZap },
-      { id: 's10', name: 'Firebase', icon: DatabaseZap }, // Using DatabaseZap for Firebase as well
+      { id: 's10', name: 'Firebase', icon: DatabaseZap }, 
     ],
   },
   {
     id: 'data_ai',
     name: 'Data & AI',
     skills: [
-      { id: 's11', name: 'Python', icon: Code }, // Assuming Code icon for Python
+      { id: 's11', name: 'Python', icon: Code }, 
       { id: 's12', name: 'NumPy', icon: Sigma },
-      { id: 's13', name: 'Pandas', icon: DatabaseZap }, // Reusing DatabaseZap for Pandas
+      { id: 's13', name: 'Pandas', icon: DatabaseZap }, 
       { id: 's14', name: 'TensorFlow', icon: BrainCircuit },
       { id: 's15', name: 'Gemini (LLMs)', icon: BrainCircuit },
     ],
@@ -97,7 +97,7 @@ export const SKILLS_DATA: SkillCategory[] = [
     skills: [
       { id: 's16', name: 'Figma', icon: Figma },
       { id: 's17', name: 'Canva', icon: Palette },
-      { id: 's18', name: 'Adobe XD', icon: Palette }, // Reusing Palette for Adobe XD
+      { id: 's18', name: 'Adobe XD', icon: Palette }, 
       { id: 's19', name: 'MidJourney', icon: ImageIcon },
     ],
   },
@@ -107,18 +107,18 @@ export const SKILLS_DATA: SkillCategory[] = [
     skills: [
       { id: 's20', name: 'Synthetic Biology', icon: FlaskConical },
       { id: 's21', name: 'Gene Circuit Design', icon: Dna },
-      { id: 's22', name: 'Bioinformatics', icon: DatabaseZap }, // Reusing DatabaseZap for Bioinformatics
+      { id: 's22', name: 'Bioinformatics', icon: DatabaseZap }, 
     ],
   },
   {
-    id: 'devops_tools', // Changed from 'other' to 'devops_tools' for clarity
+    id: 'devops_tools',
     name: 'DevOps & Tools',
     skills: [
-      { id: 's23', name: 'Git & GitHub', icon: GitFork }, // Corrected to GitFork
+      { id: 's23', name: 'Git & GitHub', icon: GitFork }, 
       { id: 's24', name: 'Vercel', icon: CloudCog },
-      { id: 's25', name: 'Netlify', icon: CloudCog }, // Reusing CloudCog for Netlify
+      { id: 's25', name: 'Netlify', icon: CloudCog }, 
       { id: 's26', name: 'Markdown', icon: FileText },
-      { id: 's27', name: 'VS Code', icon: TerminalSquare }, // Corrected to TerminalSquare
+      { id: 's27', name: 'VS Code', icon: TerminalSquare }, 
     ],
   },
 ];

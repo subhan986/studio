@@ -125,22 +125,15 @@ export const SKILLS_DATA: SkillCategory[] = [
 
 export const SOCIAL_LINKS_DATA: SocialLink[] = [
   {
-    id: 'linkedin',
-    name: 'LinkedIn',
-    url: 'https://www.linkedin.com/', 
-    icon: Linkedin,
-  },
-  {
     id: 'github',
     name: 'GitHub',
-    url: 'https://github.com/subhan', 
+    url: 'https://github.com/subhan986', 
     icon: Github,
   },
   {
     id: 'email',
     name: 'Email',
-    url: 'mailto:youremail@example.com',
+    url: 'mailto:subyounas@gmail.com',
     icon: Mail,
   },
 ];
-

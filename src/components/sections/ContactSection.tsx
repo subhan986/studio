@@ -1,3 +1,4 @@
+
 import { SOCIAL_LINKS_DATA } from '@/constants';
 import { SectionWrapper } from '@/components/shared/SectionWrapper';
 import { Button } from '@/components/ui/button';
@@ -20,7 +21,7 @@ export function ContactSection() {
           ))}
         </div>
         <Button asChild size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-md transition-transform hover:scale-105">
-          <Link href="mailto:youremail@example.com">
+          <Link href="mailto:subyounas@gmail.com">
             Send Me an Email
           </Link>
         </Button>

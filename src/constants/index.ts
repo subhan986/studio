@@ -12,7 +12,7 @@ export const NAV_LINKS = [
 export const PROJECTS_DATA: Project[] = [
   {
     id: '1',
-    title: 'E-commerce Platform',
+    title: 'Spacetime Explorer',
     description: 'A full-featured e-commerce platform with user authentication, product listings, cart functionality, and payment integration.',
     imageUrl: 'https://placehold.co/400x300.png',
     imageAiHint: 'online store',

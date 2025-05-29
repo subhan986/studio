@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 export const NAV_LINKS = [
-  { href: '#hero', label: 'About' }, // Changed from #about to #hero to match section id
+  { href: '#hero', label: 'About' },
   { href: '#projects', label: 'Projects' },
   { href: '#skills', label: 'Skills' },
   { href: '#contact', label: 'Contact' },
@@ -49,7 +49,7 @@ export const PROJECTS_DATA: Project[] = [
     id: 'gravityplay',
     title: 'GravityPlay: Real Physics, Real Fun',
     description: 'A 3D gravity simulator built from scratch using Newton’s laws—visual, interactive, and super satisfying to watch.',
-    imageUrl: 'https://placehold.co/600x450.png', // Using placeholder for now, will be updated if requested
+    imageUrl: 'https://images.unsplash.com/photo-1633624875862-2a3c50468718?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxncmF2aXR5fGVufDB8fHx8MTc0ODUxNjE2NHww&ixlib=rb-4.1.0&q=80&w=1080',
     imageAiHint: 'physics simulation',
     tags: ['JavaScript', 'Three.js', 'Physics Engine'],
     liveUrl: 'https://gravityplay.space',
@@ -143,3 +143,4 @@ export const SOCIAL_LINKS_DATA: SocialLink[] = [
     icon: Mail,
   },
 ];
+

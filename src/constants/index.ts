@@ -1,3 +1,4 @@
+
 import type { Project, SkillCategory, SocialLink } from '@/types';
 import { Linkedin, Github, Mail, Briefcase, Code, ServerCog, DatabaseZap, Wrench, BrainCircuit, LayoutTemplate, Palette, TestTubeDiagonal, CloudCog, TerminalSquare, GitFork, MessageSquare } from 'lucide-react';
 
@@ -13,7 +14,7 @@ export const PROJECTS_DATA: Project[] = [
   {
     id: '1',
     title: 'Spacetime Explorer',
-    description: 'A full-featured e-commerce platform with user authentication, product listings, cart functionality, and payment integration.',
+    description: 'A 3D APP TO VISUALIZE GRAVITY',
     imageUrl: 'https://placehold.co/400x300.png',
     imageAiHint: 'online store',
     tags: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe'],

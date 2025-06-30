@@ -610,7 +610,7 @@ export default function RoomDesigner() {
             <CardContent className="flex-grow flex flex-col items-center justify-center p-6">
               {isLoading && (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
-                  {Array.from({length:9}).map((_, i) => (
+                  {Array.from({length:10}).map((_, i) => (
                      <div key={i} className="w-full aspect-[4/3] space-y-4">
                         <Skeleton className="w-full h-full rounded-lg bg-muted/40" />
                      </div>

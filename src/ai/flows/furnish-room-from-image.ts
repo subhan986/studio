@@ -58,57 +58,52 @@ const furnishRoomFromImageFlow = ai.defineFlow(
     outputSchema: FurnishRoomFromImageOutputSchema,
   },
   async input => {
-    const generationPromises = Array.from({length: 10}).map((_, i) => {
-      const textPrompt = `Furnish this ${input.roomType} in a ${
-        input.furnitureStyle
-      } style with a ${input.colorTone} color tone. ${
-        input.specialFeatures && input.specialFeatures.length > 0
-          ? `Incorporate these features: ${input.specialFeatures.join(
-              ', '
-            )}.`
-          : ''
-      } Make it photorealistic. This is variation ${
-        i + 1
-      } of 10. Generate a unique and creative result.`;
+    const textPrompt = `Furnish this ${input.roomType} in a ${
+      input.furnitureStyle
+    } style with a ${
+      input.colorTone
+    } color tone. Make it photorealistic. Generate 10 unique and creative results. ${
+      input.specialFeatures && input.specialFeatures.length > 0
+        ? `Incorporate these features: ${input.specialFeatures.join(', ')}.`
+        : ''
+    }`;
 
-      const prompt = [
-        {media: {url: input.photoDataUri}},
-        {
-          text: textPrompt,
-        },
-      ];
+    const prompt = [
+      {media: {url: input.photoDataUri}},
+      {
+        text: textPrompt,
+      },
+    ];
 
-      return ai.generate({
-        model: 'googleai/gemini-2.0-flash-preview-image-generation',
-        prompt: prompt,
-        config: {
-          responseModalities: ['TEXT', 'IMAGE'],
-          safetySettings: [
-            {
-              category: 'HARM_CATEGORY_HATE_SPEECH',
-              threshold: 'BLOCK_ONLY_HIGH',
-            },
-            {
-              category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-              threshold: 'BLOCK_NONE',
-            },
-            {
-              category: 'HARM_CATEGORY_HARASSMENT',
-              threshold: 'BLOCK_MEDIUM_AND_ABOVE',
-            },
-            {
-              category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-              threshold: 'BLOCK_LOW_AND_ABOVE',
-            },
-          ],
-        },
-      });
+    const {response} = await ai.generate({
+      model: 'googleai/gemini-2.0-flash-preview-image-generation',
+      prompt: prompt,
+      config: {
+        candidateCount: 10,
+        responseModalities: ['TEXT', 'IMAGE'],
+        safetySettings: [
+          {
+            category: 'HARM_CATEGORY_HATE_SPEECH',
+            threshold: 'BLOCK_ONLY_HIGH',
+          },
+          {
+            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+            threshold: 'BLOCK_NONE',
+          },
+          {
+            category: 'HARM_CATEGORY_HARASSMENT',
+            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+          },
+          {
+            category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+            threshold: 'BLOCK_LOW_AND_ABOVE',
+          },
+        ],
+      },
     });
 
-    const results = await Promise.all(generationPromises);
-
-    const furnishedRoomImages = results
-      .map(result => result.media?.url)
+    const furnishedRoomImages = response.candidates
+      .map(candidate => candidate.output?.media?.url)
       .filter((url): url is string => !!url);
 
     if (furnishedRoomImages.length === 0) {

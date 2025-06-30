@@ -16,6 +16,12 @@ const FurnishRoomFromImageInputSchema = z.object({
     .describe(
       "A photo of a room, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
     ),
+  maskDataUri: z
+    .string()
+    .optional()
+    .describe(
+      "An optional mask for inpainting as a data URI. White areas on the mask indicate where to edit. Format: 'data:image/png;base64,<encoded_data>'."
+    ),
   furnitureStyle: z
     .string()
     .describe('The desired furniture style for the room.'),
@@ -58,25 +64,37 @@ const furnishRoomFromImageFlow = ai.defineFlow(
     outputSchema: FurnishRoomFromImageOutputSchema,
   },
   async input => {
-    const generationPromises = Array.from({length: 10}).map((_, i) =>
-      ai.generate({
+    const generationPromises = Array.from({length: 10}).map((_, i) => {
+      const textPrompt = `Furnish this ${input.roomType} in a ${
+        input.furnitureStyle
+      } style with a ${input.colorTone} color tone. ${
+        input.specialFeatures && input.specialFeatures.length > 0
+          ? `Incorporate these features: ${input.specialFeatures.join(
+              ', '
+            )}.`
+          : ''
+      } Make it photorealistic. This is variation ${
+        i + 1
+      } of 10. Generate a unique and creative result.`;
+
+      const prompt = input.maskDataUri
+        ? {
+            text: textPrompt,
+            inpaint: [
+              {media: {url: input.photoDataUri}},
+              {media: {url: input.maskDataUri}},
+            ],
+          }
+        : [
+            {media: {url: input.photoDataUri}},
+            {
+              text: textPrompt,
+            },
+          ];
+
+      return ai.generate({
         model: 'googleai/gemini-2.0-flash-preview-image-generation',
-        prompt: [
-          {media: {url: input.photoDataUri}},
-          {
-            text: `Furnish this ${input.roomType} in a ${
-              input.furnitureStyle
-            } style with a ${input.colorTone} color tone. ${
-              input.specialFeatures && input.specialFeatures.length > 0
-                ? `Incorporate these features: ${input.specialFeatures.join(
-                    ', '
-                  )}.`
-                : ''
-            } Make it photorealistic. This is variation ${
-              i + 1
-            } of 10. Generate a unique and creative result.`,
-          },
-        ],
+        prompt: prompt,
         config: {
           responseModalities: ['TEXT', 'IMAGE'],
           safetySettings: [
@@ -98,22 +116,19 @@ const furnishRoomFromImageFlow = ai.defineFlow(
             },
           ],
         },
-      })
-    );
+      });
+    });
 
     const results = await Promise.all(generationPromises);
 
-    const furnishedRoomImages = results.map(result => {
-      if (!result.media?.url) {
-        throw new Error(
-          'Image generation failed for one or more variations.'
-        );
-      }
-      return result.media.url;
-    });
+    const furnishedRoomImages = results
+      .map(result => result.media?.url)
+      .filter((url): url is string => !!url);
 
     if (furnishedRoomImages.length === 0) {
-      throw new Error('Image generation failed to return any images.');
+      throw new Error(
+        'Image generation failed to return any images. This could be due to a safety policy violation or a temporary issue. Please try adjusting your prompt or try again later.'
+      );
     }
 
     return {

@@ -1,6 +1,12 @@
 'use client';
 
-import {useState, type ChangeEvent, type FormEvent} from 'react';
+import {
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+  useRef,
+  useEffect,
+} from 'react';
 import Image from 'next/image';
 import {Button} from '@/components/ui/button';
 import {Label} from '@/components/ui/label';
@@ -30,6 +36,10 @@ import {
   BarChart4,
   PersonStanding,
   ArrowUpRightFromSquare,
+  Brush,
+  Eraser,
+  Download,
+  Shuffle,
 } from 'lucide-react';
 import {Spinner} from './icons';
 import {cn} from '@/lib/utils';
@@ -37,16 +47,10 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from './ui/card';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
 import {ScrollArea} from './ui/scroll-area';
 
 const roomTypes = [
@@ -130,6 +134,22 @@ const specialFeatures = [
   {name: 'Stone Mask', icon: StoneMaskIcon},
 ];
 
+const dataURIToFile = (dataURI: string, filename: string): File => {
+  const arr = dataURI.split(',');
+  const mimeMatch = arr[0].match(/:(.*?);/);
+  if (!mimeMatch) {
+    throw new Error('Invalid data URI');
+  }
+  const mime = mimeMatch[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, {type: mime});
+};
+
 export default function RoomDesigner() {
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -142,6 +162,12 @@ export default function RoomDesigner() {
     null
   );
   const {toast} = useToast();
+
+  const [isMasking, setIsMasking] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const maskCanvasRef = useRef<HTMLCanvasElement>(null);
+  const isDrawing = useRef(false);
+  const lastPosition = useRef<{x: number; y: number} | null>(null);
 
   const handleFeatureToggle = (featureName: string) => {
     setSelectedFeatures(prev =>
@@ -168,7 +194,87 @@ export default function RoomDesigner() {
       }
       setPreviewUrl(URL.createObjectURL(selectedFile));
       setFurnishedImages(null);
+      setIsMasking(false);
     }
+  };
+
+  const clearMask = () => {
+    const canvas = maskCanvasRef.current;
+    if (canvas) {
+      const context = canvas.getContext('2d');
+      if (context) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const image = imageRef.current;
+    const canvas = maskCanvasRef.current;
+    if (image && canvas && previewUrl) {
+      const setCanvasDimensions = () => {
+        const {width, height} = image.getBoundingClientRect();
+        canvas.width = width;
+        canvas.height = height;
+        clearMask();
+      };
+      image.onload = setCanvasDimensions;
+      window.addEventListener('resize', setCanvasDimensions);
+      // If image is already loaded (e.g. from cache)
+      if (image.complete) {
+        setCanvasDimensions();
+      }
+      return () => {
+        window.removeEventListener('resize', setCanvasDimensions);
+      };
+    }
+  }, [previewUrl, isMasking]);
+
+  const getCoordinates = (e: React.MouseEvent | React.TouchEvent) => {
+    const canvas = maskCanvasRef.current;
+    if (!canvas) return null;
+    const rect = canvas.getBoundingClientRect();
+    if (e.nativeEvent instanceof MouseEvent) {
+      return {x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY};
+    }
+    if (e.nativeEvent instanceof TouchEvent && e.nativeEvent.touches[0]) {
+      return {
+        x: e.nativeEvent.touches[0].clientX - rect.left,
+        y: e.nativeEvent.touches[0].clientY - rect.top,
+      };
+    }
+    return null;
+  };
+
+  const startDrawing = (e: React.MouseEvent | React.TouchEvent) => {
+    const coords = getCoordinates(e);
+    if (coords) {
+      isDrawing.current = true;
+      lastPosition.current = coords;
+    }
+  };
+
+  const draw = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDrawing.current) return;
+    const coords = getCoordinates(e);
+    const canvas = maskCanvasRef.current;
+    const context = canvas?.getContext('2d');
+    if (context && coords && lastPosition.current) {
+      context.strokeStyle = 'rgba(255, 255, 255, 1)';
+      context.lineWidth = 40;
+      context.lineCap = 'round';
+      context.lineJoin = 'round';
+      context.beginPath();
+      context.moveTo(lastPosition.current.x, lastPosition.current.y);
+      context.lineTo(coords.x, coords.y);
+      context.stroke();
+      lastPosition.current = coords;
+    }
+  };
+
+  const stopDrawing = () => {
+    isDrawing.current = false;
+    lastPosition.current = null;
   };
 
   const handleSubmit = async (event: FormEvent) => {
@@ -186,6 +292,27 @@ export default function RoomDesigner() {
     setIsLoading(true);
     setFurnishedImages(null);
 
+    let maskDataUri: string | undefined = undefined;
+    const canvas = maskCanvasRef.current;
+    if (isMasking && canvas) {
+      const context = canvas.getContext('2d');
+      if (context) {
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        const isMaskEmpty = !imageData.data.some(channel => channel !== 0);
+        if (!isMaskEmpty) {
+          maskDataUri = canvas.toDataURL('image/png');
+        } else {
+          toast({
+            variant: 'destructive',
+            title: 'Empty Mask',
+            description: 'Please draw on the image to select an area to edit.',
+          });
+          setIsLoading(false);
+          return;
+        }
+      }
+    }
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = async () => {
@@ -194,6 +321,7 @@ export default function RoomDesigner() {
 
         const result = await generateFurnishedImage({
           photoDataUri,
+          maskDataUri,
           roomType,
           furnitureStyle,
           colorTone,
@@ -228,6 +356,27 @@ export default function RoomDesigner() {
     };
   };
 
+  const handleRemix = (imageDataUri: string) => {
+    try {
+      const newFile = dataURIToFile(imageDataUri, 'remixed-image.png');
+      setFile(newFile);
+      setPreviewUrl(imageDataUri); // Data URI is valid for src
+      setFurnishedImages(null);
+      setIsMasking(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      toast({
+        title: 'Remix loaded!',
+        description: 'The generated image is now your base image. Adjust the settings and generate new ideas!',
+      });
+    } catch (error) {
+       toast({
+          variant: 'destructive',
+          title: 'Remix Failed',
+          description: 'Could not load the image for remixing.',
+        });
+    }
+  }
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 p-4 min-h-screen bg-background text-foreground">
       <div className="lg:col-span-4 xl:col-span-3 bg-card rounded-xl shadow-lg flex flex-col">
@@ -253,42 +402,73 @@ export default function RoomDesigner() {
                 >
                   Your Room Photo
                 </Label>
-                <label
-                  htmlFor="room-photo"
-                  className={cn(
-                    'relative block w-full aspect-video border-2 border-dashed border-border rounded-lg cursor-pointer transition-colors',
-                    previewUrl
-                      ? 'border-solid border-primary/50'
-                      : 'hover:border-primary/50'
-                  )}
-                >
-                  <input
-                    id="room-photo"
-                    type="file"
-                    className="sr-only"
-                    accept="image/png, image/jpeg, image/webp"
-                    onChange={handleFileChange}
-                    aria-label="Upload room photo"
-                  />
-                  {previewUrl ? (
-                    <Image
-                      src={previewUrl}
-                      alt="Room preview"
-                      fill
-                      className="object-cover rounded-md"
+                <div className="space-y-2">
+                   <label
+                    htmlFor="room-photo-upload"
+                    className={cn(
+                      'relative block w-full aspect-video border-2 border-dashed border-border rounded-lg cursor-pointer transition-colors',
+                      previewUrl
+                        ? 'border-solid border-primary/50'
+                        : 'hover:border-primary/50'
+                    )}
+                  >
+                     <input
+                      id="room-photo-upload"
+                      type="file"
+                      className="sr-only"
+                      accept="image/png, image/jpeg, image/webp"
+                      onChange={handleFileChange}
+                      aria-label="Upload room photo"
                     />
-                  ) : (
-                    <div className="flex flex-col items-center justify-center h-full text-muted-foreground p-4 text-center">
-                      <Upload className="w-8 h-8 mb-2 text-primary" />
-                      <span className="font-semibold">
-                        Upload a photo of your room
-                      </span>
-                      <span className="text-xs">
-                        PNG, JPG, or WEBP up to 4MB
-                      </span>
+                    {previewUrl ? (
+                      <>
+                        <Image
+                          ref={imageRef}
+                          src={previewUrl}
+                          alt="Room preview"
+                          fill
+                          className="object-contain rounded-md"
+                        />
+                        {isMasking && (
+                           <canvas
+                            ref={maskCanvasRef}
+                            className="absolute top-0 left-0 w-full h-full cursor-crosshair rounded-md"
+                            onMouseDown={startDrawing}
+                            onMouseMove={draw}
+                            onMouseUp={stopDrawing}
+                            onMouseLeave={stopDrawing}
+                            onTouchStart={startDrawing}
+                            onTouchMove={draw}
+                            onTouchEnd={stopDrawing}
+                          />
+                        )}
+                      </>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center h-full text-muted-foreground p-4 text-center">
+                        <Upload className="w-8 h-8 mb-2 text-primary" />
+                        <span className="font-semibold">
+                          Upload a photo of your room
+                        </span>
+                        <span className="text-xs">
+                          PNG, JPG, or WEBP up to 4MB
+                        </span>
+                      </div>
+                    )}
+                  </label>
+                  {previewUrl && (
+                     <div className="flex gap-2">
+                      <Button type="button" variant="secondary" onClick={() => setIsMasking(!isMasking)} className="w-full">
+                        <Brush className="mr-2 h-4 w-4"/>
+                        {isMasking ? 'Finish Editing' : 'Edit a Section'}
+                      </Button>
+                      {isMasking && (
+                         <Button type="button" variant="ghost" size="icon" onClick={clearMask} title="Clear mask">
+                            <Eraser className="h-4 w-4"/>
+                         </Button>
+                      )}
                     </div>
                   )}
-                </label>
+                </div>
               </div>
 
               <div className="space-y-3">
@@ -348,6 +528,7 @@ export default function RoomDesigner() {
                   {colorTones.map(tone => (
                     <Button
                       key={tone.name}
+                      type="button"
                       onClick={() => setColorTone(tone.name)}
                       variant="secondary"
                       size="sm"
@@ -375,6 +556,7 @@ export default function RoomDesigner() {
                   {specialFeatures.map(feature => (
                     <Button
                       key={feature.name}
+                      type="button"
                       variant="secondary"
                       onClick={() => handleFeatureToggle(feature.name)}
                       className={cn(
@@ -421,45 +603,52 @@ export default function RoomDesigner() {
               </CardTitle>
               {furnishedImages && furnishedImages.length > 0 && (
                 <CardDescription className="text-muted-foreground">
-                  {furnishedImages.length} variations generated. Use the arrows
-                  to navigate.
+                  {furnishedImages.length} variations generated. Hover over an image for options.
                 </CardDescription>
               )}
             </CardHeader>
             <CardContent className="flex-grow flex flex-col items-center justify-center p-6">
               {isLoading && (
-                <div className="w-full max-w-4xl aspect-[4/3] space-y-4">
-                  <Skeleton className="w-full h-full rounded-lg bg-muted/40" />
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
+                  {Array.from({length:9}).map((_, i) => (
+                     <div key={i} className="w-full aspect-[4/3] space-y-4">
+                        <Skeleton className="w-full h-full rounded-lg bg-muted/40" />
+                     </div>
+                  ))}
                 </div>
               )}
               {!isLoading && furnishedImages && furnishedImages.length > 0 && (
-                <Carousel
-                  className="w-full max-w-4xl"
-                  opts={{
-                    loop: true,
-                  }}
-                >
-                  <CarouselContent>
+                <ScrollArea className="w-full h-[75vh]">
+                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pr-6">
                     {furnishedImages.map((image, index) => (
-                      <CarouselItem key={index}>
-                        <div className="p-1">
-                          <Card className="border-none bg-transparent">
-                            <CardContent className="flex aspect-[4/3] items-center justify-center p-0 relative">
-                              <Image
+                      <Card key={index} className="overflow-hidden group relative">
+                        <CardContent className="p-0">
+                          <div className="aspect-[4/3] relative">
+                             <Image
                                 src={image}
                                 alt={`Furnished room variation ${index + 1}`}
                                 fill
-                                className="object-contain rounded-lg"
+                                className="object-cover"
                               />
-                            </CardContent>
-                          </Card>
-                        </div>
-                      </CarouselItem>
+                          </div>
+                        </CardContent>
+                        <CardFooter className="flex justify-between p-2 bg-gradient-to-t from-black/80 to-transparent absolute bottom-0 w-full opacity-0 group-hover:opacity-100 transition-opacity">
+                           <p className="text-sm font-bold text-white">Variation {index + 1}</p>
+                           <div className="flex gap-1">
+                            <Button asChild size="icon" variant="ghost" className="text-white hover:bg-white/20 hover:text-white">
+                                <a href={image} download={`design-variation-${index + 1}.png`} title="Download image">
+                                <Download className="w-4 h-4" />
+                                </a>
+                            </Button>
+                            <Button size="icon" variant="ghost" onClick={() => handleRemix(image)} title="Remix this image" className="text-white hover:bg-white/20 hover:text-white">
+                                <Shuffle className="w-4 h-4" />
+                            </Button>
+                           </div>
+                        </CardFooter>
+                      </Card>
                     ))}
-                  </CarouselContent>
-                  <CarouselPrevious className="ml-16" />
-                  <CarouselNext className="mr-16" />
-                </Carousel>
+                  </div>
+                </ScrollArea>
               )}
               {!isLoading && !furnishedImages && (
                 <div className="text-center text-muted-foreground max-w-md">

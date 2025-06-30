@@ -253,7 +253,8 @@ export default function RoomDesigner() {
                 >
                   Your Room Photo
                 </Label>
-                <div
+                <label
+                  htmlFor="room-photo"
                   className={cn(
                     'relative block w-full aspect-video border-2 border-dashed border-border rounded-lg cursor-pointer transition-colors',
                     previewUrl
@@ -287,7 +288,7 @@ export default function RoomDesigner() {
                       </span>
                     </div>
                   )}
-                </div>
+                </label>
               </div>
 
               <div className="space-y-3">

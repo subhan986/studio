@@ -75,7 +75,7 @@ const furnishRoomFromImageFlow = ai.defineFlow(
       },
     ];
 
-    const {response} = await ai.generate({
+    const {candidates} = await ai.generate({
       model: 'googleai/gemini-2.0-flash-preview-image-generation',
       prompt: prompt,
       config: {
@@ -102,7 +102,7 @@ const furnishRoomFromImageFlow = ai.defineFlow(
       },
     });
 
-    const furnishedRoomImages = response.candidates
+    const furnishedRoomImages = candidates
       .map(candidate => candidate.output?.media?.url)
       .filter((url): url is string => !!url);
 

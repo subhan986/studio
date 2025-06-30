@@ -393,7 +393,7 @@ export default function RoomDesigner() {
                       variant="secondary"
                       size="sm"
                       className={cn(
-                        'w-full justify-start h-auto p-3 gap-3 transition-colors',
+                        'w-full justify-start h-auto p-3 gap-3 transition-all hover:scale-105 active:scale-95',
                         colorTone === tone.name &&
                           'bg-primary/20 border-primary border'
                       )}
@@ -420,7 +420,7 @@ export default function RoomDesigner() {
                       variant="secondary"
                       onClick={() => handleFeatureToggle(feature.name)}
                       className={cn(
-                        'flex flex-col h-auto p-3 items-center justify-center gap-2 text-center transition-colors',
+                        'flex flex-col h-auto p-3 items-center justify-center gap-2 text-center transition-all hover:scale-105 active:scale-95',
                         selectedFeatures.includes(feature.name) &&
                           'bg-primary/20 border-primary text-primary-foreground border'
                       )}
@@ -439,7 +439,7 @@ export default function RoomDesigner() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full text-lg h-14"
+                className="w-full text-lg h-14 transition-transform hover:scale-105 active:scale-95"
                 disabled={!file || !colorTone || isLoading}
               >
                 {isLoading ? (
@@ -481,7 +481,7 @@ export default function RoomDesigner() {
                 <ScrollArea className="w-full h-[75vh]">
                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pr-6">
                     {furnishedImages.map((image, index) => (
-                      <Card key={index} className="overflow-hidden group relative">
+                      <Card key={index} className="overflow-hidden group relative opacity-0 animate-pop-in" style={{ animationDelay: `${index * 100}ms` }}>
                         <CardContent className="p-0">
                           <div className="aspect-[4/3] relative">
                              <Image
@@ -495,12 +495,12 @@ export default function RoomDesigner() {
                         <CardFooter className="flex justify-between p-2 bg-gradient-to-t from-black/80 to-transparent absolute bottom-0 w-full opacity-0 group-hover:opacity-100 transition-opacity">
                            <p className="text-sm font-bold text-white">Variation {index + 1}</p>
                            <div className="flex gap-1">
-                            <Button asChild size="icon" variant="ghost" className="text-white hover:bg-white/20 hover:text-white">
+                            <Button asChild size="icon" variant="ghost" className="text-white hover:bg-white/20 hover:text-white transition-transform hover:scale-110 active:scale-90">
                                 <a href={image} download={`design-variation-${index + 1}.png`} title="Download image">
                                 <Download className="w-4 h-4" />
                                 </a>
                             </Button>
-                            <Button size="icon" variant="ghost" onClick={() => handleRemix(image)} title="Remix this image" className="text-white hover:bg-white/20 hover:text-white">
+                            <Button size="icon" variant="ghost" onClick={() => handleRemix(image)} title="Remix this image" className="text-white hover:bg-white/20 hover:text-white transition-transform hover:scale-110 active:scale-90">
                                 <Shuffle className="w-4 h-4" />
                             </Button>
                            </div>

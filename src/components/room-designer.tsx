@@ -33,7 +33,20 @@ import {
 } from 'lucide-react';
 import {Spinner} from './icons';
 import {cn} from '@/lib/utils';
-import {Card, CardContent, CardHeader, CardTitle} from './ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from './ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 import {ScrollArea} from './ui/scroll-area';
 
 const roomTypes = [
@@ -123,7 +136,9 @@ export default function RoomDesigner() {
   const [colorTone, setColorTone] = useState('');
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [furnishedImage, setFurnishedImage] = useState<string | null>(null);
+  const [furnishedImages, setFurnishedImages] = useState<string[] | null>(
+    null
+  );
   const {toast} = useToast();
 
   const handleFeatureToggle = (featureName: string) => {
@@ -150,7 +165,7 @@ export default function RoomDesigner() {
         URL.revokeObjectURL(previewUrl);
       }
       setPreviewUrl(URL.createObjectURL(selectedFile));
-      setFurnishedImage(null);
+      setFurnishedImages(null);
     }
   };
 
@@ -167,7 +182,7 @@ export default function RoomDesigner() {
     }
 
     setIsLoading(true);
-    setFurnishedImage(null);
+    setFurnishedImages(null);
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -184,7 +199,7 @@ export default function RoomDesigner() {
         });
 
         if (result.success && result.data) {
-          setFurnishedImage(result.data.furnishedRoomImage);
+          setFurnishedImages(result.data.furnishedRoomImages);
         } else {
           throw new Error(result.error || 'Failed to furnish image.');
         }
@@ -398,9 +413,15 @@ export default function RoomDesigner() {
         <div className="flex-grow flex items-center justify-center p-0 md:p-6">
           <Card className="w-full h-full flex flex-col bg-card/50 border-border/50 shadow-xl">
             <CardHeader>
-              <CardTitle className="text-lg text-muted-foreground">
-                Generated Image
+              <CardTitle className="text-lg text-foreground font-semibold">
+                Your Designs
               </CardTitle>
+              {furnishedImages && furnishedImages.length > 0 && (
+                <CardDescription className="text-muted-foreground">
+                  {furnishedImages.length} variations generated. Use the arrows
+                  to navigate.
+                </CardDescription>
+              )}
             </CardHeader>
             <CardContent className="flex-grow flex flex-col items-center justify-center p-6">
               {isLoading && (
@@ -408,17 +429,36 @@ export default function RoomDesigner() {
                   <Skeleton className="w-full h-full rounded-lg bg-muted/40" />
                 </div>
               )}
-              {!isLoading && furnishedImage && (
-                <div className="w-full max-w-4xl aspect-[4/3] relative">
-                  <Image
-                    src={furnishedImage}
-                    alt="Furnished room"
-                    fill
-                    className="object-contain rounded-lg"
-                  />
-                </div>
+              {!isLoading && furnishedImages && furnishedImages.length > 0 && (
+                <Carousel
+                  className="w-full max-w-4xl"
+                  opts={{
+                    loop: true,
+                  }}
+                >
+                  <CarouselContent>
+                    {furnishedImages.map((image, index) => (
+                      <CarouselItem key={index}>
+                        <div className="p-1">
+                          <Card className="border-none bg-transparent">
+                            <CardContent className="flex aspect-[4/3] items-center justify-center p-0 relative">
+                              <Image
+                                src={image}
+                                alt={`Furnished room variation ${index + 1}`}
+                                fill
+                                className="object-contain rounded-lg"
+                              />
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="ml-16" />
+                  <CarouselNext className="mr-16" />
+                </Carousel>
               )}
-              {!isLoading && !furnishedImage && (
+              {!isLoading && !furnishedImages && (
                 <div className="text-center text-muted-foreground max-w-md">
                   <div className="inline-block p-4 bg-primary/10 rounded-full mb-4">
                     <Sparkles className="w-12 h-12 text-primary" />

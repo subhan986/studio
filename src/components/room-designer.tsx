@@ -2,14 +2,6 @@
 
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import Image from 'next/image';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import {
@@ -22,9 +14,27 @@ import {
 import { generateFurnishedImage } from '@/app/actions';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from './ui/skeleton';
-import { Sparkles, Upload } from 'lucide-react';
+import {
+  Home,
+  Image as ImageIcon,
+  Lightbulb,
+  Sparkles,
+  Upload,
+} from 'lucide-react';
 import { Spinner } from './icons';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { RadioGroup, RadioGroupItem } from './ui/radio-group';
+import { cn } from '@/lib/utils';
+import { Card, CardContent } from './ui/card';
 
+const roomTypes = [
+  'Living Room',
+  'Bedroom',
+  'Dining Room',
+  'Kitchen',
+  'Office',
+  'Bathroom',
+];
 const furnitureStyles = [
   'Modern',
   'Minimalist',
@@ -35,14 +45,22 @@ const furnitureStyles = [
   'Farmhouse',
   'Traditional',
 ];
+const colorTones = [
+  { name: 'Warm Neutral', color: '#EAE0D5' },
+  { name: 'Cool Neutral', color: '#C9D1D9' },
+  { name: 'Earthy Tones', color: '#A59A8D' },
+  { name: 'Monochromatic', color: '#888888' },
+  { name: 'Pastel Hues', color: '#FEC8D8' },
+  { name: 'Bold & Vibrant', color: '#FF6B6B' },
+];
 
 export default function RoomDesigner() {
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [roomType, setRoomType] = useState('');
   const [furnitureStyle, setFurnitureStyle] = useState('');
+  const [colorTone, setColorTone] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [originalImage, setOriginalImage] = useState<string | null>(null);
   const [furnishedImage, setFurnishedImage] = useState<string | null>(null);
   const { toast } = useToast();
 
@@ -63,23 +81,22 @@ export default function RoomDesigner() {
       }
       setPreviewUrl(URL.createObjectURL(selectedFile));
       setFurnishedImage(null);
-      setOriginalImage(null);
     }
   };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (!file || !furnitureStyle) {
+    if (!file || !furnitureStyle || !roomType || !colorTone) {
       toast({
         variant: 'destructive',
         title: 'Missing information',
-        description: 'Please upload an image and select a style.',
+        description:
+          'Please upload an image and select a room type, style, and color tone.',
       });
       return;
     }
 
     setIsLoading(true);
-    setError(null);
     setFurnishedImage(null);
 
     const reader = new FileReader();
@@ -87,11 +104,12 @@ export default function RoomDesigner() {
     reader.onloadend = async () => {
       try {
         const photoDataUri = reader.result as string;
-        setOriginalImage(photoDataUri);
 
         const result = await generateFurnishedImage({
           photoDataUri,
+          roomType,
           furnitureStyle,
+          colorTone,
         });
 
         if (result.success && result.data) {
@@ -102,7 +120,6 @@ export default function RoomDesigner() {
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : 'An unknown error occurred.';
-        setError(errorMessage);
         toast({
           variant: 'destructive',
           title: 'Generation Failed',
@@ -115,7 +132,6 @@ export default function RoomDesigner() {
     reader.onerror = () => {
       setIsLoading(false);
       const errorMessage = 'Failed to read the file.';
-      setError(errorMessage);
       toast({
         variant: 'destructive',
         title: 'File Error',
@@ -125,26 +141,30 @@ export default function RoomDesigner() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-      <div className="lg:col-span-4">
-        <form onSubmit={handleSubmit}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-headline text-2xl">
-                Design Your Room
-              </CardTitle>
-              <CardDescription>
-                Upload a photo and choose a style to begin.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 p-4 md:p-6 min-h-screen">
+      <div className="lg:col-span-4 xl:col-span-3 flex flex-col gap-6">
+        <header className="flex items-center gap-3 py-2">
+          <Home className="h-8 w-8 text-primary" />
+          <h1 className="text-2xl font-bold text-foreground">
+            Aesthetic Architect
+          </h1>
+        </header>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6 flex-grow">
+          <Tabs defaultValue="from-photo" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="from-photo">
+                <ImageIcon className="mr-2" /> From Photo
+              </TabsTrigger>
+              <TabsTrigger value="freestyle" disabled>
+                <Lightbulb className="mr-2" /> Freestyle
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="from-photo" className="mt-6 space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="room-photo" className="text-lg">
-                  1. Upload Photo
-                </Label>
                 <Label
                   htmlFor="room-photo"
-                  className="relative block w-full h-64 border-2 border-dashed border-muted-foreground/50 rounded-lg cursor-pointer hover:bg-muted transition-colors"
+                  className="relative block w-full aspect-video border-2 border-dashed border-muted-foreground/50 rounded-lg cursor-pointer hover:bg-muted/20 transition-colors"
                 >
                   <input
                     id="room-photo"
@@ -162,16 +182,39 @@ export default function RoomDesigner() {
                     />
                   ) : (
                     <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
-                      <Upload className="w-10 h-10 mb-2" />
-                      <span className="font-semibold">Click to upload</span>
-                      <span className="text-sm">PNG, JPG, or WEBP (max 4MB)</span>
+                      <Upload className="w-8 h-8 mb-2" />
+                      <span className="font-semibold">
+                        Click or Drag & Drop to Upload
+                      </span>
+                      <span className="text-sm">
+                        Upload a photo of your interior
+                      </span>
                     </div>
                   )}
                 </Label>
               </div>
+
               <div className="space-y-2">
-                <Label htmlFor="furniture-style" className="text-lg">
-                  2. Choose Style
+                <Label htmlFor="room-type" className="font-semibold">
+                  Room Type
+                </Label>
+                <Select value={roomType} onValueChange={setRoomType} required>
+                  <SelectTrigger id="room-type" className="w-full">
+                    <SelectValue placeholder="Select a room type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {roomTypes.map(style => (
+                      <SelectItem key={style} value={style}>
+                        {style}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="furniture-style" className="font-semibold">
+                  Room Style
                 </Label>
                 <Select
                   value={furnitureStyle}
@@ -182,7 +225,7 @@ export default function RoomDesigner() {
                     <SelectValue placeholder="Select a furniture style" />
                   </SelectTrigger>
                   <SelectContent>
-                    {furnitureStyles.map((style) => (
+                    {furnitureStyles.map(style => (
                       <SelectItem key={style} value={style}>
                         {style}
                       </SelectItem>
@@ -190,75 +233,98 @@ export default function RoomDesigner() {
                   </SelectContent>
                 </Select>
               </div>
-            </CardContent>
-            <CardFooter>
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={!file || !furnitureStyle || isLoading}
-              >
-                {isLoading ? (
-                  <Spinner className="animate-spin mr-2" />
-                ) : (
-                  <Sparkles className="mr-2 h-4 w-4" />
-                )}
-                {isLoading ? 'Furnishing...' : 'Furnish My Room'}
-              </Button>
-            </CardFooter>
-          </Card>
+
+              <div className="space-y-3">
+                <Label className="font-semibold">Color Tones</Label>
+                <RadioGroup
+                  value={colorTone}
+                  onValueChange={setColorTone}
+                  className="grid grid-cols-2 gap-3"
+                >
+                  {colorTones.map(tone => (
+                    <Label
+                      key={tone.name}
+                      htmlFor={tone.name}
+                      className={cn(
+                        'flex items-center gap-3 rounded-md border-2 p-3 cursor-pointer transition-colors',
+                        colorTone === tone.name
+                          ? 'border-primary bg-primary/10'
+                          : 'border-input hover:bg-muted/50'
+                      )}
+                    >
+                      <RadioGroupItem
+                        value={tone.name}
+                        id={tone.name}
+                        className="sr-only"
+                      />
+                      <span
+                        style={{ backgroundColor: tone.color }}
+                        className="h-5 w-5 rounded-full border"
+                      ></span>
+                      <span className="font-medium text-sm">{tone.name}</span>
+                    </Label>
+                  ))}
+                </RadioGroup>
+              </div>
+            </TabsContent>
+          </Tabs>
+          <div className="mt-auto">
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full text-lg"
+              disabled={
+                !file || !furnitureStyle || !roomType || !colorTone || isLoading
+              }
+            >
+              {isLoading ? (
+                <Spinner className="animate-spin mr-2" />
+              ) : (
+                <Sparkles className="mr-2 h-5 w-5" />
+              )}
+              {isLoading ? 'Generating...' : 'Generate Ideas'}
+            </Button>
+          </div>
         </form>
       </div>
 
-      <div className="lg:col-span-8">
-        <Card className="h-full">
-          <CardHeader>
-            <CardTitle className="font-headline text-2xl">Results</CardTitle>
-            <CardDescription>
-              Your original and AI-furnished rooms will appear here.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="h-full">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
-              <div className="flex flex-col gap-2">
-                <h3 className="text-center font-semibold text-muted-foreground">Original Room</h3>
-                <div className="aspect-square relative bg-muted rounded-lg flex items-center justify-center">
-                  {originalImage ? (
-                    <Image
-                      src={originalImage}
-                      alt="Original room"
-                      fill
-                      className="object-contain rounded-lg"
-                    />
-                  ) : (
-                     <p className="text-muted-foreground">Your photo will be shown here</p>
-                  )}
+      <div className="lg:col-span-8 xl:col-span-9 flex flex-col">
+        <div className="flex-grow flex items-center justify-center p-6">
+          <Card className="w-full h-full flex flex-col">
+            <CardContent className="flex-grow flex flex-col items-center justify-center p-6">
+              {isLoading && (
+                 <div className="w-full max-w-2xl aspect-square space-y-4">
+                    <Skeleton className="w-full h-full rounded-lg" />
+                 </div>
+              )}
+              {!isLoading && furnishedImage && (
+                <div className="w-full max-w-2xl aspect-square relative">
+                  <Image
+                    src={furnishedImage}
+                    alt="Furnished room"
+                    fill
+                    className="object-contain rounded-lg"
+                  />
                 </div>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <h3 className="text-center font-semibold text-muted-foreground">Furnished Room</h3>
-                <div className="aspect-square relative bg-muted rounded-lg flex items-center justify-center">
-                  {isLoading && (
-                    <div className="w-full h-full p-4 space-y-4">
-                       <Skeleton className="w-full h-full" />
-                    </div>
-                  )}
-                  {!isLoading && furnishedImage && (
-                    <Image
-                      src={furnishedImage}
-                      alt="Furnished room"
-                      fill
-                      className="object-contain rounded-lg"
-                    />
-                  )}
-                   {!isLoading && !furnishedImage && (
-                     <p className="text-muted-foreground">AI magic happens here</p>
-                   )}
+              )}
+              {!isLoading && !furnishedImage && (
+                <div className="text-center text-muted-foreground">
+                  <div className="inline-block p-4 bg-primary/10 rounded-full mb-4">
+                    <Sparkles className="w-12 h-12 text-primary" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-foreground mb-2">
+                    Your designs will appear here
+                  </h2>
+                  <p>
+                    Use the controls on the left to configure your desired
+                    interior, then click "Generate Ideas" to see the magic
+                    happen.
+                  </p>
                 </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );

@@ -102,7 +102,7 @@ const furnishRoomFromImageFlow = ai.defineFlow(
       },
     });
 
-    const furnishedRoomImages = candidates
+    const furnishedRoomImages = (candidates || [])
       .map(candidate => candidate.output?.media?.url)
       .filter((url): url is string => !!url);
 

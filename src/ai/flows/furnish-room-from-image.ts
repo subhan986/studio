@@ -16,12 +16,6 @@ const FurnishRoomFromImageInputSchema = z.object({
     .describe(
       "A photo of a room, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
     ),
-  maskDataUri: z
-    .string()
-    .optional()
-    .describe(
-      "An optional mask for inpainting as a data URI. White areas on the mask indicate where to edit. Format: 'data:image/png;base64,<encoded_data>'."
-    ),
   furnitureStyle: z
     .string()
     .describe('The desired furniture style for the room.'),
@@ -77,20 +71,12 @@ const furnishRoomFromImageFlow = ai.defineFlow(
         i + 1
       } of 10. Generate a unique and creative result.`;
 
-      const prompt = input.maskDataUri
-        ? {
-            text: textPrompt,
-            inpaint: [
-              {media: {url: input.photoDataUri}},
-              {media: {url: input.maskDataUri}},
-            ],
-          }
-        : [
-            {media: {url: input.photoDataUri}},
-            {
-              text: textPrompt,
-            },
-          ];
+      const prompt = [
+        {media: {url: input.photoDataUri}},
+        {
+          text: textPrompt,
+        },
+      ];
 
       return ai.generate({
         model: 'googleai/gemini-2.0-flash-preview-image-generation',

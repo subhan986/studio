@@ -4,8 +4,6 @@ import {
   useState,
   type ChangeEvent,
   type FormEvent,
-  useRef,
-  useEffect,
 } from 'react';
 import Image from 'next/image';
 import {Button} from '@/components/ui/button';
@@ -36,8 +34,6 @@ import {
   BarChart4,
   PersonStanding,
   ArrowUpRightFromSquare,
-  Brush,
-  Eraser,
   Download,
   Shuffle,
 } from 'lucide-react';
@@ -163,12 +159,6 @@ export default function RoomDesigner() {
   );
   const {toast} = useToast();
 
-  const [isMasking, setIsMasking] = useState(false);
-  const imageRef = useRef<HTMLImageElement>(null);
-  const maskCanvasRef = useRef<HTMLCanvasElement>(null);
-  const isDrawing = useRef(false);
-  const lastPosition = useRef<{x: number; y: number} | null>(null);
-
   const handleFeatureToggle = (featureName: string) => {
     setSelectedFeatures(prev =>
       prev.includes(featureName)
@@ -194,87 +184,7 @@ export default function RoomDesigner() {
       }
       setPreviewUrl(URL.createObjectURL(selectedFile));
       setFurnishedImages(null);
-      setIsMasking(false);
     }
-  };
-
-  const clearMask = () => {
-    const canvas = maskCanvasRef.current;
-    if (canvas) {
-      const context = canvas.getContext('2d');
-      if (context) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-      }
-    }
-  };
-
-  useEffect(() => {
-    const image = imageRef.current;
-    const canvas = maskCanvasRef.current;
-    if (image && canvas && previewUrl) {
-      const setCanvasDimensions = () => {
-        const {width, height} = image.getBoundingClientRect();
-        canvas.width = width;
-        canvas.height = height;
-        clearMask();
-      };
-      image.onload = setCanvasDimensions;
-      window.addEventListener('resize', setCanvasDimensions);
-      // If image is already loaded (e.g. from cache)
-      if (image.complete) {
-        setCanvasDimensions();
-      }
-      return () => {
-        window.removeEventListener('resize', setCanvasDimensions);
-      };
-    }
-  }, [previewUrl, isMasking]);
-
-  const getCoordinates = (e: React.MouseEvent | React.TouchEvent) => {
-    const canvas = maskCanvasRef.current;
-    if (!canvas) return null;
-    const rect = canvas.getBoundingClientRect();
-    if (e.nativeEvent instanceof MouseEvent) {
-      return {x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY};
-    }
-    if (e.nativeEvent instanceof TouchEvent && e.nativeEvent.touches[0]) {
-      return {
-        x: e.nativeEvent.touches[0].clientX - rect.left,
-        y: e.nativeEvent.touches[0].clientY - rect.top,
-      };
-    }
-    return null;
-  };
-
-  const startDrawing = (e: React.MouseEvent | React.TouchEvent) => {
-    const coords = getCoordinates(e);
-    if (coords) {
-      isDrawing.current = true;
-      lastPosition.current = coords;
-    }
-  };
-
-  const draw = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!isDrawing.current) return;
-    const coords = getCoordinates(e);
-    const canvas = maskCanvasRef.current;
-    const context = canvas?.getContext('2d');
-    if (context && coords && lastPosition.current) {
-      context.strokeStyle = 'rgba(255, 255, 255, 1)';
-      context.lineWidth = 40;
-      context.lineCap = 'round';
-      context.lineJoin = 'round';
-      context.beginPath();
-      context.moveTo(lastPosition.current.x, lastPosition.current.y);
-      context.lineTo(coords.x, coords.y);
-      context.stroke();
-      lastPosition.current = coords;
-    }
-  };
-
-  const stopDrawing = () => {
-    isDrawing.current = false;
-    lastPosition.current = null;
   };
 
   const handleSubmit = async (event: FormEvent) => {
@@ -292,27 +202,6 @@ export default function RoomDesigner() {
     setIsLoading(true);
     setFurnishedImages(null);
 
-    let maskDataUri: string | undefined = undefined;
-    const canvas = maskCanvasRef.current;
-    if (isMasking && canvas) {
-      const context = canvas.getContext('2d');
-      if (context) {
-        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-        const isMaskEmpty = !imageData.data.some(channel => channel !== 0);
-        if (!isMaskEmpty) {
-          maskDataUri = canvas.toDataURL('image/png');
-        } else {
-          toast({
-            variant: 'destructive',
-            title: 'Empty Mask',
-            description: 'Please draw on the image to select an area to edit.',
-          });
-          setIsLoading(false);
-          return;
-        }
-      }
-    }
-
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = async () => {
@@ -321,7 +210,6 @@ export default function RoomDesigner() {
 
         const result = await generateFurnishedImage({
           photoDataUri,
-          maskDataUri,
           roomType,
           furnitureStyle,
           colorTone,
@@ -362,7 +250,6 @@ export default function RoomDesigner() {
       setFile(newFile);
       setPreviewUrl(imageDataUri); // Data URI is valid for src
       setFurnishedImages(null);
-      setIsMasking(false);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       toast({
         title: 'Remix loaded!',
@@ -423,25 +310,11 @@ export default function RoomDesigner() {
                     {previewUrl ? (
                       <>
                         <Image
-                          ref={imageRef}
                           src={previewUrl}
                           alt="Room preview"
                           fill
                           className="object-contain rounded-md"
                         />
-                        {isMasking && (
-                           <canvas
-                            ref={maskCanvasRef}
-                            className="absolute top-0 left-0 w-full h-full cursor-crosshair rounded-md"
-                            onMouseDown={startDrawing}
-                            onMouseMove={draw}
-                            onMouseUp={stopDrawing}
-                            onMouseLeave={stopDrawing}
-                            onTouchStart={startDrawing}
-                            onTouchMove={draw}
-                            onTouchEnd={stopDrawing}
-                          />
-                        )}
                       </>
                     ) : (
                       <div className="flex flex-col items-center justify-center h-full text-muted-foreground p-4 text-center">
@@ -455,19 +328,6 @@ export default function RoomDesigner() {
                       </div>
                     )}
                   </label>
-                  {previewUrl && (
-                     <div className="flex gap-2">
-                      <Button type="button" variant="secondary" onClick={() => setIsMasking(!isMasking)} className="w-full">
-                        <Brush className="mr-2 h-4 w-4"/>
-                        {isMasking ? 'Finish Editing' : 'Edit a Section'}
-                      </Button>
-                      {isMasking && (
-                         <Button type="button" variant="ghost" size="icon" onClick={clearMask} title="Clear mask">
-                            <Eraser className="h-4 w-4"/>
-                         </Button>
-                      )}
-                    </div>
-                  )}
                 </div>
               </div>
 

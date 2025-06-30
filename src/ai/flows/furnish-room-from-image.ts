@@ -25,6 +25,10 @@ const FurnishRoomFromImageInputSchema = z.object({
   colorTone: z
     .string()
     .describe('The desired color tone for the room interior.'),
+  specialFeatures: z
+    .array(z.string())
+    .optional()
+    .describe('A list of special features to include in the room.'),
 });
 export type FurnishRoomFromImageInput = z.infer<
   typeof FurnishRoomFromImageInputSchema
@@ -47,6 +51,29 @@ export async function furnishRoomFromImage(
   return furnishRoomFromImageFlow(input);
 }
 
+const furnishRoomPrompt = ai.definePrompt({
+  name: 'furnishRoomPrompt',
+  input: {schema: FurnishRoomFromImageInputSchema},
+  output: {schema: FurnishRoomFromImageOutputSchema},
+  prompt: `Generate a photorealistic image of a furnished room.
+
+Room Type: {{{roomType}}}
+Style: {{{furnitureStyle}}}
+Color Tone: {{{colorTone}}}
+{{#if specialFeatures}}
+
+Special Features to include:
+{{#each specialFeatures}}
+- {{{this}}}
+{{/each}}
+{{/if}}
+
+The user has provided this image as a base:
+{{media url=photoDataUri}}
+
+Modify the user's image to furnish it according to the specifications above. The output should be a single image of the furnished room.`,
+});
+
 const furnishRoomFromImageFlow = ai.defineFlow(
   {
     name: 'furnishRoomFromImageFlow',
@@ -59,29 +86,37 @@ const furnishRoomFromImageFlow = ai.defineFlow(
       prompt: [
         {media: {url: input.photoDataUri}},
         {
-          text: `Furnish this ${input.roomType} in a ${input.furnitureStyle} style with a ${input.colorTone} color tone.`,
+          text: `Furnish this ${input.roomType} in a ${
+            input.furnitureStyle
+          } style with a ${input.colorTone} color tone. ${
+            input.specialFeatures && input.specialFeatures.length > 0
+              ? `Incorporate these features: ${input.specialFeatures.join(
+                  ', '
+                )}.`
+              : ''
+          } Make it photorealistic.`,
         },
       ],
       config: {
         responseModalities: ['TEXT', 'IMAGE'],
         safetySettings: [
-            {
-              category: 'HARM_CATEGORY_HATE_SPEECH',
-              threshold: 'BLOCK_ONLY_HIGH',
-            },
-            {
-              category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-              threshold: 'BLOCK_NONE',
-            },
-            {
-              category: 'HARM_CATEGORY_HARASSMENT',
-              threshold: 'BLOCK_MEDIUM_AND_ABOVE',
-            },
-            {
-              category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-              threshold: 'BLOCK_LOW_AND_ABOVE',
-            },
-          ],
+          {
+            category: 'HARM_CATEGORY_HATE_SPEECH',
+            threshold: 'BLOCK_ONLY_HIGH',
+          },
+          {
+            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+            threshold: 'BLOCK_NONE',
+          },
+          {
+            category: 'HARM_CATEGORY_HARASSMENT',
+            threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+          },
+          {
+            category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+            threshold: 'BLOCK_LOW_AND_ABOVE',
+          },
+        ],
       },
     });
 

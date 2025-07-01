@@ -62,7 +62,7 @@ const furnishRoomFromImageFlow = ai.defineFlow(
       input.furnitureStyle
     } style with a ${
       input.colorTone
-    } color tone. Make it photorealistic. Generate 10 unique and creative results. ${
+    } color tone. Make it photorealistic. Generate 4 unique and creative results. ${
       input.specialFeatures && input.specialFeatures.length > 0
         ? `Incorporate these features: ${input.specialFeatures.join(', ')}.`
         : ''
@@ -79,7 +79,7 @@ const furnishRoomFromImageFlow = ai.defineFlow(
       model: 'googleai/gemini-2.0-flash-preview-image-generation',
       prompt: prompt,
       config: {
-        candidateCount: 10,
+        candidateCount: 4,
         responseModalities: ['TEXT', 'IMAGE'],
         safetySettings: [
           {

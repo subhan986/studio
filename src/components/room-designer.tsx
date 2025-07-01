@@ -145,8 +145,8 @@ export default function RoomDesigner() {
       if (selectedFile.size > 4 * 1024 * 1024) {
         toast({
           variant: 'destructive',
-          title: 'File too large',
-          description: 'Please upload an image smaller than 4MB.',
+          title: 'That\'s a chonker',
+          description: 'Gotta be under 4MB, chief.',
         });
         return;
       }
@@ -164,9 +164,9 @@ export default function RoomDesigner() {
     if (!file || !furnitureStyle || !roomType || !colorTone) {
       toast({
         variant: 'destructive',
-        title: 'Missing information',
+        title: 'Hold up',
         description:
-          'Please upload an image and select a room type, style, and color tone.',
+          'Yo, drop a pic and choose a room type, style, and color.',
       });
       return;
     }
@@ -198,7 +198,7 @@ export default function RoomDesigner() {
           err instanceof Error ? err.message : 'An unknown error occurred.';
         toast({
           variant: 'destructive',
-          title: 'Generation Failed',
+          title: 'It\'s giving... error',
           description: errorMessage,
         });
       } finally {
@@ -207,10 +207,10 @@ export default function RoomDesigner() {
     };
     reader.onerror = () => {
       setIsLoading(false);
-      const errorMessage = 'Failed to read the file.';
+      const errorMessage = 'Couldn\'t read that file, fam.';
       toast({
         variant: 'destructive',
-        title: 'File Error',
+        title: 'File is sus',
         description: errorMessage,
       });
     };
@@ -224,14 +224,14 @@ export default function RoomDesigner() {
       setFurnishedImages(null);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       toast({
-        title: 'Remix loaded!',
-        description: 'The generated image is now your base image. Adjust the settings and generate new ideas!',
+        title: 'Remix is live!',
+        description: 'Your new pic is the main character now. Tweak the settings and let\'s go again!',
       });
     } catch (error) {
        toast({
           variant: 'destructive',
-          title: 'Remix Failed',
-          description: 'Could not load the image for remixing.',
+          title: 'Remix flopped',
+          description: 'Couldn\'t load that pic for the remix, no cap.',
         });
     }
   }
@@ -244,7 +244,7 @@ export default function RoomDesigner() {
             <div className="p-2 bg-primary/20 rounded-lg">
               <Home className="h-6 w-6 text-primary" />
             </div>
-            <h1 className="text-xl font-bold">Aesthetic Architect</h1>
+            <h1 className="text-xl font-bold">Vibe Check</h1>
           </div>
         </header>
 
@@ -259,7 +259,7 @@ export default function RoomDesigner() {
                   htmlFor="room-photo"
                   className="font-semibold text-foreground/80"
                 >
-                  Your Room Photo
+                  Drop a Pic of Your Space
                 </Label>
                 <div className="space-y-2">
                    <label
@@ -292,10 +292,10 @@ export default function RoomDesigner() {
                       <div className="flex flex-col items-center justify-center h-full text-muted-foreground p-4 text-center">
                         <Upload className="w-8 h-8 mb-2 text-primary" />
                         <span className="font-semibold">
-                          Upload a photo of your room
+                          Spill the tea, upload a pic
                         </span>
                         <span className="text-xs">
-                          PNG, JPG, or WEBP up to 4MB
+                          PNG, JPG, WEBP, keep it under 4MB, fam
                         </span>
                       </div>
                     )}
@@ -309,7 +309,7 @@ export default function RoomDesigner() {
                   className="font-semibold text-foreground/80"
                 >
                   <Home className="inline-block mr-2 w-4 h-4" />
-                  Room Type
+                  What's the room's deal?
                 </Label>
                 <Select value={roomType} onValueChange={setRoomType} required>
                   <SelectTrigger id="room-type" className="w-full">
@@ -331,7 +331,7 @@ export default function RoomDesigner() {
                   className="font-semibold text-foreground/80"
                 >
                   <Paintbrush className="inline-block mr-2 w-4 h-4" />
-                  Room Style
+                  What's the aesthetic?
                 </Label>
                 <Select
                   value={furnitureStyle}
@@ -354,7 +354,7 @@ export default function RoomDesigner() {
               <div className="space-y-3">
                 <Label className="font-semibold text-foreground/80">
                   <Palette className="inline-block mr-2 w-4 h-4" />
-                  Color Tones
+                  Pick a color vibe
                 </Label>
                 <div className="grid grid-cols-2 gap-3">
                   {colorTones.map(tone => (
@@ -382,7 +382,7 @@ export default function RoomDesigner() {
 
               <div className="space-y-3">
                 <Label className="font-semibold text-foreground/80">
-                  Special Features
+                  Extra Spice
                 </Label>
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
                   {specialFeatures.map(feature => (
@@ -419,7 +419,7 @@ export default function RoomDesigner() {
                 ) : (
                   <Sparkles className="mr-2 h-5 w-5" />
                 )}
-                {isLoading ? 'Generating...' : 'Generate Ideas'}
+                {isLoading ? 'Vibin\'...' : 'Cook Up Some Looks'}
               </Button>
             </div>
           </form>
@@ -431,18 +431,18 @@ export default function RoomDesigner() {
           <Card className="w-full h-full flex flex-col bg-card/50 border-border/50 shadow-xl">
             <CardHeader>
               <CardTitle className="text-lg text-foreground font-semibold">
-                Your Designs
+                Your Lewks
               </CardTitle>
               {furnishedImages && furnishedImages.length > 0 && (
                 <CardDescription className="text-muted-foreground">
-                  {furnishedImages.length} variations generated. Hover over an image for options.
+                  {furnishedImages.length} lewks just dropped. Peep the options.
                 </CardDescription>
               )}
             </CardHeader>
             <CardContent className="flex-grow flex flex-col items-center justify-center p-6">
               {isLoading && (
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
-                  {Array.from({length:10}).map((_, i) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 w-full">
+                  {Array.from({length:4}).map((_, i) => (
                      <div key={i} className="w-full aspect-[4/3] space-y-4">
                         <Skeleton className="w-full h-full rounded-lg bg-muted/40" />
                      </div>
@@ -451,7 +451,7 @@ export default function RoomDesigner() {
               )}
               {!isLoading && furnishedImages && furnishedImages.length > 0 && (
                 <ScrollArea className="w-full h-[75vh]">
-                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pr-6">
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pr-6">
                     {furnishedImages.map((image, index) => (
                       <Card key={index} className="overflow-hidden group relative opacity-0 animate-pop-in" style={{ animationDelay: `${index * 100}ms` }}>
                         <CardContent className="p-0">
@@ -488,12 +488,10 @@ export default function RoomDesigner() {
                     <Sparkles className="w-12 h-12 text-primary" />
                   </div>
                   <h2 className="text-2xl font-bold text-foreground mb-2">
-                    Your design ideas will appear here
+                    Your fire designs gonna show up here
                   </h2>
                   <p>
-                    Upload a photo and use the controls to set your desired
-                    style. Click &ldquo;Generate Ideas&rdquo; to see the magic
-                    happen.
+                    Drop a pic, pick your vibe, and smash that 'Generate' button. It's gonna be bussin'.
                   </p>
                 </div>
               )}

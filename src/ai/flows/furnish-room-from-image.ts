@@ -62,51 +62,65 @@ const furnishRoomFromImageFlow = ai.defineFlow(
       input.furnitureStyle
     } style with a ${
       input.colorTone
-    } color tone. Make it photorealistic. Generate 4 unique and creative results. ${
+    } color tone. Make it photorealistic. ${
       input.specialFeatures && input.specialFeatures.length > 0
         ? `Incorporate these features: ${input.specialFeatures.join(', ')}.`
         : ''
     }`;
 
-    const prompt = [
+    const promptPayload = [
       {media: {url: input.photoDataUri}},
       {
         text: textPrompt,
       },
     ];
 
-    const {candidates} = await ai.generate({
-      model: 'googleai/gemini-2.0-flash-preview-image-generation',
-      prompt: prompt,
-      config: {
-        candidateCount: 4,
-        responseModalities: ['TEXT', 'IMAGE'],
-        safetySettings: [
-          {
-            category: 'HARM_CATEGORY_HATE_SPEECH',
-            threshold: 'BLOCK_NONE',
-          },
-          {
-            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-            threshold: 'BLOCK_NONE',
-          },
-          {
-            category: 'HARM_CATEGORY_HARASSMENT',
-            threshold: 'BLOCK_NONE',
-          },
-          {
-            category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-            threshold: 'BLOCK_NONE',
-          },
-        ],
-      },
-    });
+    const imagePromises = Array.from({length: 4}).map(() =>
+      ai.generate({
+        model: 'googleai/gemini-2.0-flash-preview-image-generation',
+        prompt: promptPayload,
+        config: {
+          responseModalities: ['TEXT', 'IMAGE'],
+          safetySettings: [
+            {
+              category: 'HARM_CATEGORY_HATE_SPEECH',
+              threshold: 'BLOCK_NONE',
+            },
+            {
+              category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+              threshold: 'BLOCK_NONE',
+            },
+            {
+              category: 'HARM_CATEGORY_HARASSMENT',
+              threshold: 'BLOCK_NONE',
+            },
+            {
+              category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+              threshold: 'BLOCK_NONE',
+            },
+          ],
+        },
+      })
+    );
 
-    const furnishedRoomImages = (candidates || [])
-      .map(candidate => candidate.output?.media?.url)
-      .filter((url): url is string => !!url);
+    const results = await Promise.allSettled(imagePromises);
+
+    const furnishedRoomImages = results
+      .filter(
+        (
+          result
+        ): result is PromiseFulfilledResult<{media?: {url: string}}> =>
+          result.status === 'fulfilled' && !!result.value.media?.url
+      )
+      .map(result => result.value.media!.url);
 
     if (furnishedRoomImages.length === 0) {
+      // Log failed promises for debugging
+      results.forEach(result => {
+        if (result.status === 'rejected') {
+          console.error('Image generation promise rejected:', result.reason);
+        }
+      });
       throw new Error(
         'Image generation failed to return any images. This could be due to a safety policy violation or a temporary issue. Please try adjusting your prompt or try again later.'
       );
